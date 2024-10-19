@@ -1,0 +1,223 @@
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Permite el scroll horizontal en pantallas pequeñas */
+    margin-bottom: 20px;
+    background: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #4CAF50;
+    color: black;
+}
+
+thead th {
+    padding: 10px;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+.table-container {
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+    padding: 20px; /* Espaciado interno */
+    margin: 20px; /* Margen alrededor del contenedor */
+    background: #81C784;
+}
+
+#search-input {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.search-and-filter{
+    justify-content: space-between;
+    display: flex; /* Usar flexbox para alinear los elementos */
+    align-items: center; /* Alinear verticalmente al centro */
+    margin-bottom: 20px; /* Espacio entre el filtro y la tabla */
+}
+.lista-and-crear{
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    margin: 20px;
+
+}
+
+.search-and-filter .button-group{
+    justify-content: end;
+
+}
+/* Estilo para el grupo de botones */
+.button-group {
+    align-items:center;
+    justify-content: flex-end;
+    display: flex;
+}
+.button-group>h5{
+    margin:10px;
+}
+.table-container>h5{
+    font-size: 15px;
+}
+/* Estilo para los botones */
+.filter-button {
+    background: transparent;
+    font-size: 15px;
+    color: black;
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cambiar cursor a mano */
+    transition: background-color 0.3s; /* Efecto de transición */
+}
+
+/* Estilo para el botón de crear empleado */
+.create-button {
+    background-color: #28a745; /* Color verde para crear empleado */
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cambiar cursor a mano */
+    transition: background-color 0.3s; /* Efecto de transición */
+}
+
+/* Cambiar color de fondo al pasar el mouse */
+.filter-button:hover, .create-button:hover {
+    background-color: #005B33; /* Color de fondo más oscuro al pasar el mouse */
+}
+
+/* Cambiar color de fondo al pasar el mouse en el botón de crear */
+.create-button:hover {
+    background-color: #218838; /* Color más oscuro para el botón de crear */
+}
+
+
+/* Media Queries para responsividad */
+
+/* Dispositivos móviles (pantallas menores de 576px) */
+@media screen and (max-width: 575.98px) {
+    th, td {
+        font-size: 14px; /* Tamaño de fuente más pequeño */
+    }
+
+    th {
+        display: none; /* Ocultar encabezados */
+    }
+
+    tr {
+        display: block; /* Convertir filas en bloques */
+        margin-bottom: 10px; /* Espacio entre filas */
+        border: 1px solid #ddd; /* Bordes alrededor de cada fila */
+        border-radius: 5px; /* Esquinas redondeadas */
+    }
+
+    td {
+        display: flex; /* Usar flexbox para alinear contenido */
+        justify-content: space-between; /* Espacio entre elementos */
+        padding: 10px; /* Espaciado en celdas */
+        border-bottom: none; /* Sin borde inferior en celdas */
+        border-radius: 5px; /* Esquinas redondeadas en celdas */
+        background-color: #fff; /* Color de fondo para celdas */
+    }
+
+    td::before {
+        content: attr(data-label); /* Mostrar el contenido del atributo 'data-label' */
+        font-weight: bold; /* Hacer el texto en negrita */
+        color: black; /* Color del texto */
+    }
+    .lista-and-crear {
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 20px;
+    }
+
+    .search-and-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    #search-input {
+        width: 100%; /* Ocupa todo el ancho del contenedor */
+        margin-bottom: 10px;
+    }
+
+    .button-group {
+        width: 100%;
+        justify-content: space-between; /* Acomoda los botones en fila horizontal */
+        flex-direction: row; /* Sigue en fila horizontal incluso en móviles */
+    }
+
+}
+
+
+/* Tablets pequeñas y medianas (pantallas entre 576px y 768px) */
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    th, td {
+        font-size: 15px; /* Tamaño de fuente para tablets pequeñas */
+    }
+
+    th {
+        display: none; /* Ocultar encabezados en pantallas pequeñas */
+    }
+
+    tr {
+        display: block; /* Convertir filas en bloques */
+        margin-bottom: 10px; /* Espacio entre filas */
+        border: 1px solid #ddd; /* Bordes alrededor de cada fila */
+        border-radius: 5px; /* Esquinas redondeadas */
+    }
+
+    td {
+        display: flex; /* Usar flexbox para alinear contenido */
+        justify-content: space-between; /* Espacio entre elementos */
+        padding: 10px; /* Espaciado en celdas */
+        border-bottom: none; /* Sin borde inferior en celdas */
+        border-radius: 5px; /* Esquinas redondeadas en celdas */
+        background-color: #fff; /* Color de fondo para celdas */
+    }
+
+    td::before {
+        content: attr(data-label); /* Mostrar el contenido del atributo 'data-label' */
+        font-weight: bold; /* Hacer el texto en negrita */
+        color: black; /* Color del texto */
+    }
+}
+
+/* Pantallas medianas y grandes (mayores de 768px) */
+@media screen and (min-width: 769px) {
+    th, td {
+        font-size: 16px; /* Tamaño de fuente normal */
+    }
+}

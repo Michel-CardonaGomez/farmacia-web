@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Fondo circular en verde pastel claro -->
+  <circle cx="100" cy="100" r="90" fill="#b2d8b2"/>
+
+  <!-- Cruz de farmacia en verde más oscuro -->
+  <rect x="80" y="40" width="40" height="120" rx="10" fill="#8fc98f"/>
+  <rect x="40" y="80" width="120" height="40" rx="10" fill="#8fc98f"/>
+
+  <!-- Texto "Vida Natural" en verde oscuro con tipografía diferente -->
+  <text x="50%" y="90%" font-family="Trebuchet MS, sans-serif" font-size="20" fill="#4f7f4f" text-anchor="middle">
+    Vida Natural
+  </text>
+</svg>
+

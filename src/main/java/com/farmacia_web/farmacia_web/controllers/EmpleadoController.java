@@ -1,15 +1,15 @@
 package com.farmacia_web.farmacia_web.controllers;
 
 
+import org.springframework.ui.Model;
 import com.farmacia_web.farmacia_web.models.Empleado;
 import com.farmacia_web.farmacia_web.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
-@RestController
-@RequestMapping("/empleados")
+@Controller
+@RequestMapping("/api/empleados")
 public class EmpleadoController {
 
     @Autowired
@@ -21,9 +21,11 @@ public class EmpleadoController {
      * @return Lista de empleados.
      */
     @GetMapping
-    public ArrayList<Empleado> obtenerEmpleados() {
-        return this.empleadoService.obtenerEmpleados();
+    public String listarEmpleados(Model model) {
+        model.addAttribute("empleados", empleadoService.obtenerEmpleados());
+        return "empleados";
     }
+
 
     /**
      * Crea un nuevo empleado.
@@ -31,10 +33,14 @@ public class EmpleadoController {
      * @param empleado El objeto Empleado que se va a crear.
      * @return El empleado creado.
      */
-    @PostMapping
-    public Empleado guardarEmpleado(@RequestBody Empleado empleado) {
-        return this.empleadoService.crearEmpleado(empleado);
+    @PostMapping("/crear")
+    public String guardarEmpleado(Empleado empleado, Model model) {
+        String resultado = empleadoService.crearEmpleado(empleado);
+
+        model.addAttribute("mensaje", resultado); // Añadir un mensaje de éxito o error
+        return "redirect:/empleados"; // Redirigir a la lista de empleados o a otra vista
     }
+
 
     /**
      * Obtiene un empleado por su ID.

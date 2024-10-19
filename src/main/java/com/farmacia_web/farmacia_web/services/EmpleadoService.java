@@ -5,8 +5,8 @@ import com.farmacia_web.farmacia_web.repositories.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -14,6 +14,7 @@ import java.util.Optional;
 public class EmpleadoService {
     @Autowired
     EmpleadoRepository empleadoRepository;
+
 
     public ArrayList<Empleado> obtenerEmpleados() {
         try {
@@ -34,7 +35,7 @@ public class EmpleadoService {
             empleado.setUsuario(request.getUsuario());
             empleado.setContrasena(request.getContrasena());
             empleado.setRol(request.getRol());
-            empleado.setCreacion(new Date());
+            empleado.setCreacion(LocalDateTime.now());
 
             return empleadoRepository.save(empleado);
         } catch (Exception e) {
@@ -71,7 +72,7 @@ public class EmpleadoService {
             empleado.setUsuario(request.getUsuario());
             empleado.setContrasena(request.getContrasena());
             empleado.setRol(request.getRol());
-            empleado.setActualizacion(new Date());
+            empleado.setActualizacion(LocalDateTime.now());
 
             return empleadoRepository.save(empleado);
         } catch (NoSuchElementException e) {
