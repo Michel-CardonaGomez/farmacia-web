@@ -5,7 +5,6 @@ import com.farmacia_web.farmacia_web.repositories.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,18 +24,9 @@ public class EmpleadoService {
     }
 
 
-    public Empleado crearEmpleado(Empleado request) {
+    public Empleado crearEmpleado(Empleado empleado) {
         try {
-            Empleado empleado = new Empleado();
-
-            empleado.setNombre(request.getNombre());
-            empleado.setCedula(request.getCedula());
-            empleado.setTelefono(request.getTelefono());
-            empleado.setUsuario(request.getUsuario());
-            empleado.setContrasena(request.getContrasena());
-            empleado.setRol(request.getRol());
-            empleado.setCreacion(LocalDateTime.now());
-
+            empleado.setActivo(false);
             return empleadoRepository.save(empleado);
         } catch (Exception e) {
             throw new RuntimeException("Error al crear el empleado: " + e.getMessage());
@@ -65,15 +55,13 @@ public class EmpleadoService {
             Empleado empleado = empleadoRepository.findById(id).orElseThrow(() ->
                     new NoSuchElementException("Empleado con ID " + id + " no encontrado")
             );
-
+            empleado.setId(request.getId());
             empleado.setNombre(request.getNombre());
-            empleado.setCedula(request.getCedula());
+            empleado.setIdentificacion(request.getIdentificacion());
             empleado.setTelefono(request.getTelefono());
-            empleado.setUsuario(request.getUsuario());
-            empleado.setContrasena(request.getContrasena());
+            empleado.setEmail(request.getEmail());
             empleado.setRol(request.getRol());
-            empleado.setActualizacion(LocalDateTime.now());
-
+            empleado.setActivo(empleado.getActivo());
             return empleadoRepository.save(empleado);
         } catch (NoSuchElementException e) {
             throw e;  // Lanzamos esta excepción específica

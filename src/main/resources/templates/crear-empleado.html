@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>empleados</title>
@@ -93,56 +86,71 @@
 <div class="contenido-principal">
   <h1>Farmacia Vida natural</h1>
   <div class="container-fluid formulario">
-    <form id="formulario" class="container-fluid">
-        <form id="form-empleado">
-          <h5>Creación de empleado</h5>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label" for="cedula">Cédula:</label>
-              <input type="text" id="cedula" name="cedula" class="form-control" required>
-              <small class="text-danger" id="error-cedula"></small>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label" for="nombre">Nombre:</label>
-              <input type="text" id="nombre" name="nombre" class="form-control" required>
-              <small class="text-danger" id="error-nombre"></small>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label" for="email">Email:</label>
-            <div class="input-group">
-              <span class="input-group-text">@</span>
-              <input type="email" id="email" name="email" class="form-control" required>
-              <small class="text-danger" id="error-email"></small>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label" for="telefono">Teléfono:</label>
-              <input type="text" id="telefono" name="telefono" class="form-control" required>
-              <small class="text-danger" id="error-telefono"></small>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label" for="rol">Rol:</label>
-              <select id="rol" name="rol" class="form-select" required>
-                <option value="administrador">Administrador</option>
-                <option value="empleado">Empleado</option>
-              </select>
-            </div>
-          </div>
-          <div class="boton">
-            <button type="submit" class="create-button">
-              <i class="fas fa-plus"></i>
-              Crear Empleado</button>
-          </div>
-        </form>
+    <form id="form-empleado" th:object="${empleado}" th:action="@{/api/empleados}" method="post" class="container-fluid">
+      <h5>Creación de empleado</h5>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="cedula">Cédula:</label>
+          <input type="text" id="cedula" th:field="*{identificacion}" class="form-control" required />
+          <small class="text-danger" id="error-cedula"></small>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="nombre">Nombre:</label>
+          <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
+          <small class="text-danger" id="error-nombre"></small>
+        </div>
       </div>
+      <div class="mb-3">
+        <label class="form-label" for="email">Email:</label>
+        <div class="input-group">
+          <span class="input-group-text">@</span>
+          <input type="email" id="email" th:field="*{email}" class="form-control" required />
+          <small class="text-danger" id="error-email"></small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" th:field="*{telefono}" class="form-control" required />
+          <small class="text-danger" id="error-telefono"></small>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="rol">Rol:</label>
+          <select id="rol" th:field="*{rol}" class="form-select" required>
+            <option value="administrador">Administrador</option>
+            <option value="empleado">Empleado</option>
+          </select>
+        </div>
+      </div>
+      <div class="boton">
+        <button type="submit" class="create-button">
+          <i class="fas fa-plus"></i> Crear Empleado
+        </button>
+      </div>
+    </form>
+
+    <!-- Modal de Error -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p th:text="${errorMessage}">Aquí aparecerá el mensaje de error</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+<script src="../static/js/modal.js" th:src="@{/js/modal.js}"></script>
 <script src="../static/js/sidebar.js" th:src="@{/js/sidebar.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
 </body>
 </html>

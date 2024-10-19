@@ -109,25 +109,34 @@
                         <th>Cédula</th>
                         <th>Nombre</th>
                         <th>Teléfono</th>
+                        <th>Email</th>
                         <th>Rol</th>
-                        <th>creacion</th>
-                        <th>actualizacion</th>
+                        <th>Creacion</th>
+                        <th>Actualizacion</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="empleado : ${empleados}">
                         <td data-label="Id" th:text="${empleado.id}"></td>
-                        <td data-label="Cédula"th:text="${empleado.cedula}"></td>
+                        <td data-label="Cédula"th:text="${empleado.identificacion}"></td>
                         <td data-label="Nombre" th:text="${empleado.nombre}"></td>
                         <td data-label="Teléfono" th:text="${empleado.telefono}"></td>
-                        <td data-label="Rol"th:text="${empleado.rol}"></td>
-                        <td data-label="Creación"th:text="${empleado.creacion}"></td>
-                        <td data-label="Actualización"th:text="${empleado.actualizacion}"></td>
-                        <td data-label="Acciones"><button>Editar</button>   <button>Eliminar</button></td>
+                        <td data-label="Email" th:text="${empleado.email}"></td>
+                        <td data-label="Rol" th:text="${empleado.rol}"></td>
+                        <td data-label="Creación" th:text="${empleado.creacion}"></td>
+                        <td data-label="Actualización" th:text="${empleado.actualizacion}"></td>
+                        <td data-label="Estado" th:with="estado=${empleado.activo ? 'Activo' : 'Inactivo'}" th:text="${estado}"></td>
+                        <td data-label="Acciones">
+                            <a th:href="@{/api/empleados/editar/{id}(id=${empleado.id})}" class="boton">Editar</a>
+                            <a th:href="@{/api/empleados/eliminar/{id}(id=${empleado.id})}" class="boton"
+                               onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">Eliminar</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
+
         </div>
             <div th:if="${error}">
                 <p class="text-danger" th:text="${error}"></p>

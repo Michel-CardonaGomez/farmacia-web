@@ -25,45 +25,37 @@ public class EmpleadoController {
         model.addAttribute("empleados", empleadoService.obtenerEmpleados());
         return "empleados";
     }
-
-
-    /**
-     * Crea un nuevo empleado.
-     *
-     * @param empleado El objeto Empleado que se va a crear.
-     * @return El empleado creado.
-     */
-    @PostMapping("/crear")
-    public String guardarEmpleado(Empleado empleado, Model model) {
-        String resultado = empleadoService.crearEmpleado(empleado);
-
-        model.addAttribute("mensaje", resultado); // Añadir un mensaje de éxito o error
-        return "redirect:/empleados"; // Redirigir a la lista de empleados o a otra vista
+    @GetMapping("/crear")
+    public String MostrarFormularioRegistrar(Model model) {
+        Empleado empleado = new Empleado();
+        model.addAttribute("empleado", empleado);
+        return "crear-empleado";
     }
 
-
-    /**
-     * Obtiene un empleado por su ID.
-     *
-     * @param id El ID del empleado a buscar.
-     * @return El empleado encontrado.
-     */
-    @GetMapping(path = "/{id}")
-    public Empleado obtenerPorId(@PathVariable Long id) {
-        return this.empleadoService.obtenerPorId(id);
+    @PostMapping
+    public String crearEmpleado(@ModelAttribute("empleado") Empleado empleado, Model model) {
+        try {
+            empleadoService.crearEmpleado(empleado);
+            return "redirect:/api/empleados";
+        } catch (RuntimeException e) {
+            // Capturar el error y pasarlo al modelo
+            model.addAttribute("errorMessage", "Error al guardar el empleado: " + e.getMessage());
+            model.addAttribute("showErrorModal", true); // Esta bandera indica que el modal debe mostrarse
+            return "crear-empleado";
+        }
+    }
+    @GetMapping("/editar/{id}")
+    public String MostrarFormularioEditar (@PathVariable Long id, Model model) {
+        model.addAttribute("empleado", empleadoService.obtenerPorId(id));
+        return "editar-empleado";
     }
 
-    /**
-     * Actualiza un empleado existente.
-     *
-     * @param request El objeto Empleado con los datos actualizados.
-     * @param id      El ID del empleado a actualizar.
-     * @return El empleado actualizado.
-     */
-    @PutMapping(path = "/{id}")
-    public Empleado actualizarEmpleadoPorId(@RequestBody Empleado request, @PathVariable Long id) {
-        return this.empleadoService.actualizarEmpleadoPorId(request, id);
+    @PostMapping("/{id}")
+    public String ActualizarEmpleado(@PathVariable Long id, @ModelAttribute("empleado") Empleado empleado, Model model) {
+        empleadoService.actualizarEmpleadoPorId(empleado, id);
+        return "redirect:/api/empleados";
     }
+
 
     /**
      * Elimina un empleado por su ID.
@@ -71,13 +63,9 @@ public class EmpleadoController {
      * @param id El ID del empleado a eliminar.
      * @return Mensaje de éxito.
      */
-    @DeleteMapping(path = "/{id}")
+    @GetMapping("/eliminar/{id}")
     public String eliminarEmpleado(@PathVariable Long id) {
-        boolean ok = this.empleadoService.eliminarEmpleado(id);
-        if (ok) {
-            return "Empleado con id " + id + " eliminado";
-        } else {
-            throw new RuntimeException("ha ocurrido un error al eliminar el empleado");
-        }
+        empleadoService.eliminarEmpleado(id);
+        return "redirect:/api/empleados";
     }
 }

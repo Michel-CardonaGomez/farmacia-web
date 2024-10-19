@@ -11,6 +11,7 @@ import java.util.Map;
 @Repository
 public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
 
-    @Query(value = "SELECT emp_id AS id, emp_cedula AS cedula, emp_nombre AS nombre, emp_telefono AS telefono, emp_rol AS rol FROM empleados", nativeQuery = true)
-    List<Map<String, Object>> obtenerEmpleados();
+    @Query(value = "SELECT id, identificacion, nombre, telefono, email, rol, fecha_creacion, fecha_actualizacion, activo FROM empleados", nativeQuery = true)
+    List<Map<String, Object>> listarEmpleados();
+
 }

@@ -2,8 +2,10 @@ package com.farmacia_web.farmacia_web.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @Entity
@@ -12,33 +14,39 @@ public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "emp_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "emp_cedula", nullable = false)
-    private Long cedula;
+    @Column(name = "identificacion", nullable = false, unique = true)
+    private Long identificacion;
 
-    @Column(name = "emp_nombre", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "emp_telefono", nullable = false)
+    @Column(name = "telefono", nullable = false)
     private Long telefono;
 
-    @Column(name = "emp_rol", nullable = false)
+    @Column(name = "rol", nullable = false)
     private String rol;
 
-    @Column(name = "emp_usuario", nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "usuario", unique = true)
     private String usuario;
 
-    @Column(name = "emp_contraseña", nullable = false)
+    @Column(name = "contraseña")
     private String contrasena;
 
-    @Column(name = "emp_creacion", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime creacion;
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", updatable = false)
+    private Timestamp creacion;
 
-    @Column(name = "emp_actualizacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime actualizacion;
+    @UpdateTimestamp
+    @Column(name = "fecha_actualizacion")
+    private Timestamp actualizacion;
+
+    @Column(name = "activo")
+    private Boolean activo;
 
 }
