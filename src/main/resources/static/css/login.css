@@ -8,6 +8,22 @@ body{
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
 }
+
+.link-registro{
+    justify-content: right;
+    padding: 10px;
+    font-size: 17px;
+}
+.link-registro>a{
+    text-decoration: none;
+    color: #005B33;
+    font-size: 17px;
+}
+
+.link-registro>a:hover{
+    color: #4CAF50;
+    text-decoration: underline;
+}
 .wave{
     position: fixed;
     bottom: 0;
@@ -37,7 +53,7 @@ body{
     align-items: center;
     text-align: center;
     position: absolute; /* Usa posición absoluta para posicionar en relación a la pantalla */
-    top: 20%;
+    top: 10%;
     left: 55%;
     padding: 20px;
     border-radius: 15px; /* Redondea los bordes */

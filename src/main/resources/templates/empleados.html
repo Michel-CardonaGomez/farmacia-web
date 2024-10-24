@@ -74,10 +74,13 @@
             <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
         </button>
         <div id="logout">
-        <button id="logout_btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="item-description"> Salir </span>
-        </button>
+            <form th:action="@{/logout}" th:method="post">
+                <div id="logout">
+                    <button type="submit" id="logout_btn" class="btn btn-primary btn-block">
+                        Salir
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </nav>
@@ -129,8 +132,8 @@
                         <td data-label="Actualización" th:text="${empleado.actualizacion}"></td>
                         <td data-label="Estado" th:with="estado=${empleado.activo ? 'Activo' : 'Inactivo'}" th:text="${estado}"></td>
                         <td data-label="Acciones">
-                            <a th:href="@{/api/empleados/editar/{id}(id=${empleado.id})}" class="boton">Editar</a>
-                            <a th:href="@{/api/empleados/eliminar/{id}(id=${empleado.id})}" class="boton"
+                            <a th:href="@{/admin/empleados/editar/{id}(id=${empleado.id})}" class="boton">Editar</a>
+                            <a th:href="@{/admin/empleados/eliminar/{id}(id=${empleado.id})}" class="boton"
                                onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">Eliminar</a>
                         </td>
                     </tr>

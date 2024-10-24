@@ -2,8 +2,10 @@ package com.farmacia_web.farmacia_web.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "clientes")
@@ -25,9 +27,11 @@ public class Cliente {
     @Column(name = "telefono")
     private Long telefono;
 
-    @Column(name = "fecha_creacion")
-    private LocalDateTime creacion;
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", updatable = false)
+    private Timestamp creacion;
 
+    @UpdateTimestamp
     @Column(name = "fecha_actualizacion")
-    private LocalDateTime actualizacion;
+    private Timestamp actualizacion;
 }

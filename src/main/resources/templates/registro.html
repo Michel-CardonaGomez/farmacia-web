@@ -16,16 +16,16 @@
     <img src="../static/imagenes/doctors.svg"  th:src="@{/imagenes/doctors.svg}">
   </div>
   <div class="contenido-login">
-    <form th:action="@{/login}" th:method="post">
+    <form th:action="@{/registro}" th:method="post" th:object="${empleado}" >
       <img src="../static/imagenes/logo.svg" th:src="@{/imagenes/logo.svg}">
-      <h2>Farmacia</h2>
+      <h2>Registro</h2>
       <div class="input-div user">
         <div class="i">
           <i class="fas fa-user"></i>
         </div>
         <div class="div">
           <h5>Email:</h5>
-          <input type="text" name="email" class="input">
+          <input type="text" name="email" class="input" th:field="*{email}">
         </div>
       </div>
       <div class="input-div pass">
@@ -34,14 +34,19 @@
         </div>
         <div class="div">
           <h5>Contraseña:</h5>
-          <input type="password" name="contrasena" class="input">
+          <input type="password" name="contrasena" class="input" th:field="*{contrasena}">
         </div>
       </div>
-      <div class="link-registro">
-        <h4>¿Aún no tienes una cuenta?</h4>
-        <a th:href="@{/registro}">Registrate aquí</a>
+      <div class="input-div pass">
+        <div class="i">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="div">
+          <h5>Confirmar contraseña:</h5>
+          <input type="password" name="confirmContrasena" class="input">
+        </div>
       </div>
-      <input type="submit" class="btn" value="Iniciar sesión">
+      <input type="submit" class="btn" value="Registrarse">
     </form>
   </div>
 </div>
