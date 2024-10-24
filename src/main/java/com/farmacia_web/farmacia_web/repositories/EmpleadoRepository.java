@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
@@ -14,4 +15,5 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
     @Query(value = "SELECT id, identificacion, nombre, telefono, email, rol, fecha_creacion, fecha_actualizacion, activo FROM empleados", nativeQuery = true)
     List<Map<String, Object>> listarEmpleados();
 
+    Optional<Empleado> findByEmail(String email);
 }

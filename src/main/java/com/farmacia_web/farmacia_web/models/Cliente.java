@@ -10,24 +10,24 @@ import java.time.LocalDateTime;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cli_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "cli_cedula", nullable = false)
+    @Column(name = "cedula", nullable = false)
     private Long cedula;
 
-    @Column(name = "cli_nombre", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "cli_email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "cli_telefono")
+    @Column(name = "telefono")
     private Long telefono;
 
-    @Column(name = "cli_creacion")
+    @Column(name = "fecha_creacion")
     private LocalDateTime creacion;
 
-    @Column(name = "cli_actualizacion")
+    @Column(name = "fecha_actualizacion")
     private LocalDateTime actualizacion;
 }

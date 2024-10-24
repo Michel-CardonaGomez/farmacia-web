@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/api/empleados")
+@RequestMapping("/admin/empleados")
 public class EmpleadoController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class EmpleadoController {
     public String crearEmpleado(@ModelAttribute("empleado") Empleado empleado, Model model) {
         try {
             empleadoService.crearEmpleado(empleado);
-            return "redirect:/api/empleados";
+            return "redirect:/admin/empleados";
         } catch (RuntimeException e) {
             // Capturar el error y pasarlo al modelo
             model.addAttribute("errorMessage", "Error al guardar el empleado: " + e.getMessage());
@@ -53,7 +53,7 @@ public class EmpleadoController {
     @PostMapping("/{id}")
     public String ActualizarEmpleado(@PathVariable Long id, @ModelAttribute("empleado") Empleado empleado, Model model) {
         empleadoService.actualizarEmpleadoPorId(empleado, id);
-        return "redirect:/api/empleados";
+        return "redirect:/admin/empleados";
     }
 
 
@@ -66,6 +66,6 @@ public class EmpleadoController {
     @GetMapping("/eliminar/{id}")
     public String eliminarEmpleado(@PathVariable Long id) {
         empleadoService.eliminarEmpleado(id);
-        return "redirect:/api/empleados";
+        return "redirect:/admin/empleados";
     }
 }
