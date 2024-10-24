@@ -15,8 +15,8 @@ public class Cliente {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "cedula", nullable = false)
-    private Long cedula;
+    @Column(name = "identificacion", nullable = false)
+    private Long identificacion;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
