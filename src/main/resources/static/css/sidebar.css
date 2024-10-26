@@ -14,6 +14,12 @@ body {
     overflow-x: auto;
 }
 
+.contenido-principal>h1{
+    font-weight: bold;
+    font-size: calc(1.375rem + 1vw);
+    padding-left: 25px;
+
+}
 .contenido-principal{
     padding: 20px;
     position:relative;
@@ -69,6 +75,7 @@ body {
     flex-direction: column;
     gap: 8px;
     list-style: none;
+    padding-left: 1px;
 }
 
 .side-item {

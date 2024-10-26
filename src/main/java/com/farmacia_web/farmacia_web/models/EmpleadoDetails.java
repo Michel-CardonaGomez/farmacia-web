@@ -26,6 +26,7 @@ public class EmpleadoDetails implements UserDetails {
         return empleado.getContrasena();
     }
 
+
     @Override
     public String getUsername() {
         return empleado.getEmail();

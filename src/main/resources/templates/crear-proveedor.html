@@ -25,26 +25,21 @@
 <div class="contenido-principal">
   <h1>Farmacia Vida natural</h1>
   <div class="container-fluid formulario">
-    <form id="form-empleado" th:object="${empleado}" th:action="@{/admin/empleados}" method="post" class="container-fluid">
-      <h5>Creación de empleado</h5>
+    <form id="form-proveedor" th:object="${proveedor}" th:action="@{/admin/proveedores}" method="post" class="container-fluid">
+      <h5>Creación de Proveedor</h5>
       <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label" for="cedula">Cédula:</label>
-          <input type="text" id="cedula" th:field="*{identificacion}" class="form-control" required />
-          <small class="text-danger" id="error-cedula"></small>
-        </div>
         <div class="col-md-6 mb-3">
           <label class="form-label" for="nombre">Nombre:</label>
           <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
           <small class="text-danger" id="error-nombre"></small>
         </div>
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="email">Email:</label>
-        <div class="input-group">
-          <span class="input-group-text">@</span>
-          <input type="email" id="email" th:field="*{email}" class="form-control" required />
-          <small class="text-danger" id="error-email"></small>
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="email">Email:</label>
+          <div class="input-group">
+            <span class="input-group-text">@</span>
+            <input type="email" id="email" th:field="*{email}" class="form-control" required />
+            <small class="text-danger" id="error-email"></small>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -54,16 +49,19 @@
           <small class="text-danger" id="error-telefono"></small>
         </div>
         <div class="col-md-6 mb-3">
-          <label class="form-label" for="rol">Rol:</label>
-          <select id="rol" th:field="*{rol}" class="form-select" required>
-            <option value="administrador">Administrador</option>
-            <option value="empleado">Empleado</option>
-          </select>
+          <label class="form-label" for="ciudad">Ciudad:</label>
+          <input type="text" id="ciudad" th:field="*{ciudad}" class="form-control" required />
+          <small class="text-danger" id="error-ciudad"></small>
         </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="descripcion">Descripción:</label>
+        <textarea id="descripcion" th:field="*{descripcion}" class="form-control" rows="4" required></textarea>
+        <small class="text-danger" id="error-descripcion"></small>
       </div>
       <div class="boton">
         <button type="submit" class="create-button">
-          <i class="fas fa-plus"></i> Crear Empleado
+          <i class="fas fa-plus"></i> Crear Proveedor
         </button>
       </div>
     </form>
