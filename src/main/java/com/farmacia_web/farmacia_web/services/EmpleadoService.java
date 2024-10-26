@@ -9,12 +9,21 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * Servicio para manejar operaciones CRUD de la entidad Empleado.
+ */
 @Service
 public class EmpleadoService {
+
     @Autowired
-    EmpleadoRepository empleadoRepository;
+    private EmpleadoRepository empleadoRepository;
 
-
+    /**
+     * Obtiene la lista de todos los empleados.
+     *
+     * @return Lista de objetos Empleado.
+     * @throws RuntimeException si ocurre un error al obtener los empleados.
+     */
     public ArrayList<Empleado> obtenerEmpleados() {
         try {
             return (ArrayList<Empleado>) empleadoRepository.findAll();
@@ -23,7 +32,13 @@ public class EmpleadoService {
         }
     }
 
-
+    /**
+     * Crea un nuevo empleado en la base de datos y lo establece como inactivo inicialmente.
+     *
+     * @param empleado Objeto Empleado a crear.
+     * @return El empleado creado.
+     * @throws RuntimeException si ocurre un error al crear el empleado.
+     */
     public Empleado crearEmpleado(Empleado empleado) {
         try {
             empleado.setActivo(false);
@@ -33,7 +48,14 @@ public class EmpleadoService {
         }
     }
 
-
+    /**
+     * Obtiene un empleado por su ID.
+     *
+     * @param id ID del empleado a obtener.
+     * @return El empleado encontrado.
+     * @throws NoSuchElementException si el empleado con el ID especificado no existe.
+     * @throws RuntimeException si ocurre un error al obtener el empleado.
+     */
     public Empleado obtenerPorId(Long id) {
         try {
             Optional<Empleado> empleado = empleadoRepository.findById(id);
@@ -50,6 +72,15 @@ public class EmpleadoService {
         }
     }
 
+    /**
+     * Actualiza un empleado existente por su ID.
+     *
+     * @param request Objeto Empleado con la información actualizada.
+     * @param id ID del empleado a actualizar.
+     * @return El empleado actualizado.
+     * @throws NoSuchElementException si el empleado con el ID especificado no existe.
+     * @throws RuntimeException si ocurre un error al actualizar el empleado.
+     */
     public Empleado actualizarEmpleadoPorId(Empleado request, Long id) {
         try {
             Empleado empleado = empleadoRepository.findById(id).orElseThrow(() ->
@@ -64,12 +95,20 @@ public class EmpleadoService {
             empleado.setActivo(empleado.getActivo());
             return empleadoRepository.save(empleado);
         } catch (NoSuchElementException e) {
-            throw e;  // Lanzamos esta excepción específica
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar empleado con ID " + id + ": " + e.getMessage());
         }
     }
 
+    /**
+     * Elimina un empleado por su ID.
+     *
+     * @param id ID del empleado a eliminar.
+     * @return true si el empleado fue eliminado correctamente.
+     * @throws NoSuchElementException si el empleado con el ID especificado no existe.
+     * @throws RuntimeException si ocurre un error al eliminar el empleado.
+     */
     public boolean eliminarEmpleado(Long id) {
         try {
             if (!empleadoRepository.existsById(id)) {

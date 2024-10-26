@@ -9,12 +9,21 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * Servicio para manejar operaciones CRUD de la entidad Cliente.
+ */
 @Service
 public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
 
+    /**
+     * Obtiene la lista de todos los clientes.
+     *
+     * @return Lista de objetos Cliente.
+     * @throws RuntimeException si ocurre un error al obtener los clientes.
+     */
     public ArrayList<Cliente> obtenerClientes() {
         try {
             return (ArrayList<Cliente>) clienteRepository.findAll();
@@ -23,6 +32,13 @@ public class ClienteService {
         }
     }
 
+    /**
+     * Crea un nuevo cliente en la base de datos.
+     *
+     * @param cliente Objeto Cliente a crear.
+     * @return El cliente creado.
+     * @throws RuntimeException si ocurre un error al crear el cliente.
+     */
     public Cliente crearCliente(Cliente cliente) {
         try {
             return clienteRepository.save(cliente);
@@ -31,6 +47,14 @@ public class ClienteService {
         }
     }
 
+    /**
+     * Obtiene un cliente por su ID.
+     *
+     * @param id ID del cliente a obtener.
+     * @return El cliente encontrado.
+     * @throws NoSuchElementException si el cliente con el ID especificado no existe.
+     * @throws RuntimeException si ocurre un error al obtener el cliente.
+     */
     public Cliente obtenerPorId(Long id) {
         try {
             Optional<Cliente> cliente = clienteRepository.findById(id);
@@ -46,6 +70,15 @@ public class ClienteService {
         }
     }
 
+    /**
+     * Actualiza un cliente existente por su ID.
+     *
+     * @param request Objeto Cliente con la información actualizada.
+     * @param id ID del cliente a actualizar.
+     * @return El cliente actualizado.
+     * @throws NoSuchElementException si el cliente con el ID especificado no existe.
+     * @throws RuntimeException si ocurre un error al actualizar el cliente.
+     */
     public Cliente actualizarClientePorId(Cliente request, Long id) {
         try {
             Cliente cliente = clienteRepository.findById(id).orElseThrow(() ->
@@ -55,15 +88,22 @@ public class ClienteService {
             cliente.setNombre(request.getNombre());
             cliente.setEmail(request.getEmail());
             cliente.setTelefono(request.getTelefono());
-            // No es necesario modificar las fechas aquí, ya que se actualizan automáticamente
             return clienteRepository.save(cliente);
         } catch (NoSuchElementException e) {
-            throw e;  // Lanzamos esta excepción específica
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar cliente con ID " + id + ": " + e.getMessage());
         }
     }
 
+    /**
+     * Elimina un cliente por su ID.
+     *
+     * @param id ID del cliente a eliminar.
+     * @return true si el cliente fue eliminado correctamente.
+     * @throws NoSuchElementException si el cliente con el ID especificado no existe.
+     * @throws RuntimeException si ocurre un error al eliminar el cliente.
+     */
     public boolean eliminarCliente(Long id) {
         try {
             if (!clienteRepository.existsById(id)) {
@@ -78,4 +118,3 @@ public class ClienteService {
         }
     }
 }
-

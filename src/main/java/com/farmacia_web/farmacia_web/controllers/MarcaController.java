@@ -15,28 +15,16 @@ public class MarcaController {
     private MarcaService marcaService;
 
     /**
-     * Obtiene una lista de todas las marcas.
+     * Obtiene una lista de todas las marcas y muestra la vista con los formularios.
      *
      * @param model El modelo para pasar los datos a la vista.
-     * @return La vista con la lista de marcas.
+     * @return La vista con la lista de marcas y formularios.
      */
     @GetMapping
     public String listarMarcas(Model model) {
+        model.addAttribute("marca", new Marca());
         model.addAttribute("marcas", marcaService.obtenerMarcas());
-        return "marcas/marcas"; // Nombre de la vista para listar marcas
-    }
-
-    /**
-     * Muestra el formulario para crear una nueva marca.
-     *
-     * @param model El modelo para pasar los datos a la vista.
-     * @return La vista con el formulario de creación de marca.
-     */
-    @GetMapping("/crear")
-    public String mostrarFormularioRegistrar(Model model) {
-        Marca marca = new Marca();
-        model.addAttribute("marca", marca);
-        return "marcas/crear-marca"; // Nombre de la vista para crear una marca
+        return "marcas/marcas"; // Nombre de la vista para listar marcas y formularios
     }
 
     /**
@@ -44,18 +32,19 @@ public class MarcaController {
      *
      * @param marca La marca a crear.
      * @param model El modelo para manejar errores y pasar los datos a la vista.
-     * @return Redirección a la lista de marcas o a la vista de creación en caso de error.
+     * @return Redirección a la lista de marcas o a la vista con errores.
      */
     @PostMapping
     public String crearMarca(@ModelAttribute("marca") Marca marca, Model model) {
         try {
             marcaService.crearMarca(marca);
-            return "redirect:/marcas";
-        } catch (RuntimeException e) {
+            model.addAttribute("successMessage", "Marca creada con éxito.");
+        } catch (Exception e) {
             model.addAttribute("errorMessage", "Error al guardar la marca: " + e.getMessage());
-            model.addAttribute("showErrorModal", true); // Bandera para mostrar el modal de error
-            return "marcas/crear-marca"; // Nombre de la vista para crear una marca
         }
+        // Retorna a la misma vista para mostrar la lista de marcas y formularios nuevamente
+        model.addAttribute("marcas", marcaService.obtenerMarcas());
+        return "marcas/marcas"; // Nombre de la vista para listar marcas y formularios
     }
 
     /**
@@ -63,12 +52,18 @@ public class MarcaController {
      *
      * @param id    El ID de la marca a editar.
      * @param model El modelo para pasar los datos de la marca a la vista.
-     * @return La vista con el formulario de edición de marca.
+     * @return La vista con la lista de marcas y el formulario de edición.
      */
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        model.addAttribute("marca", marcaService.obtenerPorId(id));
-        return "marcas/editar-marca"; // Nombre de la vista para editar una marca
+        Marca marca = marcaService.obtenerPorId(id); // Obtiene la marca por ID
+        if (marca != null) {
+            model.addAttribute("marca", marca); // Agrega la marca al modelo para editar
+        } else {
+            model.addAttribute("errorMessage", "Marca no encontrada.");
+        }
+        model.addAttribute("marcas", marcaService.obtenerMarcas()); // Mantiene la lista de marcas
+        return "marcas/marcas"; // Nombre de la vista para listar marcas y formularios
     }
 
     /**
@@ -77,12 +72,19 @@ public class MarcaController {
      * @param id    El ID de la marca a actualizar.
      * @param marca La marca con los nuevos datos.
      * @param model El modelo para manejar errores y pasar los datos a la vista.
-     * @return Redirección a la lista de marcas.
+     * @return Redirección a la lista de marcas o a la vista con errores.
      */
     @PostMapping("/{id}")
     public String actualizarMarca(@PathVariable Long id, @ModelAttribute("marca") Marca marca, Model model) {
-        marcaService.actualizarMarcaPorId(marca, id);
-        return "redirect:/marcas";
+        try {
+            marcaService.actualizarMarcaPorId(marca, id);
+            model.addAttribute("successMessage", "Marca actualizada con éxito.");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error al actualizar la marca: " + e.getMessage());
+        }
+        // Retorna a la misma vista para mostrar la lista de marcas y formularios nuevamente
+        model.addAttribute("marcas", marcaService.obtenerMarcas());
+        return "marcas/marcas"; // Nombre de la vista para listar marcas y formularios
     }
 
     /**
@@ -97,3 +99,5 @@ public class MarcaController {
         return "redirect:/marcas";
     }
 }
+
+
