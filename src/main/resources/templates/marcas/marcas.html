@@ -25,9 +25,9 @@
         <h1>Farmacia Vida natural</h1>
         <div class="table-container">
             <div class="lista-and-crear">
-                <h3> Lista de clientes</h3>
+                <h3> Lista de Marcas</h3>
                 <button id="create-empleado" class="create-button">
-                    <i class="fas fa-plus"></i> Nuevo Empleado
+                    <i class="fas fa-plus"></i> Nueva marca
                 </button>
             </div>
         <div class="search-and-filter">
@@ -45,27 +45,21 @@
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Cédula</th>
                     <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
                     <th>Creación</th>
                     <th>Actualización</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="cliente : ${clientes}">
-                    <td data-label="Id" th:text="${cliente.id}"></td>
-                    <td data-label="Cédula" th:text="${cliente.identificacion}"></td>
-                    <td data-label="Nombre" th:text="${cliente.nombre}"></td>
-                    <td data-label="Teléfono" th:text="${cliente.telefono}"></td>
-                    <td data-label="Email" th:text="${cliente.email}"></td>
-                    <td data-label="Creación" th:text="${cliente.creacion}"></td>
-                    <td data-label="Actualización" th:text="${cliente.actualizacion}"></td>
+                <tr th:each="marca : ${marcas}">
+                    <td data-label="Id" th:text="${marca.id}"></td>
+                    <td data-label="Nombre" th:text="${marca.nombre}"></td>
+                    <td data-label="Creación" th:text="${marca.creacion}"></td>
+                    <td data-label="Actualización" th:text="${marca.actualizacion}"></td>
                     <td data-label="Acciones">
-                        <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="boton">Editar</a>
-                        <a th:href="@{/clientes/eliminar/{id}(id=${cliente.id})}" class="boton"
+                        <a th:href="@{/templates/marcas/editar/{id}(id=${marca.id})}" class="boton">Editar</a>
+                        <a th:href="@{/templates/marcas/eliminar/{id}(id=${marca.id})}" class="boton"
                            onclick="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">Eliminar</a>
                     </td>
                 </tr>

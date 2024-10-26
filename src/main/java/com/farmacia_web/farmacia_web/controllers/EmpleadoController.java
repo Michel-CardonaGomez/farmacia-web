@@ -23,13 +23,13 @@ public class EmpleadoController {
     @GetMapping
     public String listarEmpleados(Model model) {
         model.addAttribute("empleados", empleadoService.obtenerEmpleados());
-        return "empleados";
+        return "empleados/empleados";
     }
     @GetMapping("/crear")
     public String MostrarFormularioRegistrar(Model model) {
         Empleado empleado = new Empleado();
         model.addAttribute("empleado", empleado);
-        return "crear-empleado";
+        return "empleados/crear-empleado";
     }
 
     @PostMapping
@@ -41,13 +41,13 @@ public class EmpleadoController {
             // Capturar el error y pasarlo al modelo
             model.addAttribute("errorMessage", "Error al guardar el empleado: " + e.getMessage());
             model.addAttribute("showErrorModal", true); // Esta bandera indica que el modal debe mostrarse
-            return "crear-empleado";
+            return "empleados/crear-empleado";
         }
     }
     @GetMapping("/editar/{id}")
     public String MostrarFormularioEditar (@PathVariable Long id, Model model) {
         model.addAttribute("empleado", empleadoService.obtenerPorId(id));
-        return "editar-empleado";
+        return "empleados/editar-empleado";
     }
 
     @PostMapping("/{id}")

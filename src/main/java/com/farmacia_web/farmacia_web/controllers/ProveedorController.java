@@ -15,24 +15,39 @@ public class ProveedorController {
     private ProveedorService proveedorService;
 
     /**
-     * Obtiene una lista de todos los proveedores.
+     * Muestra la lista de todos los proveedores.
      *
-     * @return Lista de proveedores.
+     * @param model El modelo para pasar datos a la vista.
+     * @return El nombre de la vista que muestra la lista de proveedores.
      */
     @GetMapping
-    public String listarproveedores(Model model) {
+    public String listarProveedores(Model model) {
         model.addAttribute("proveedores", proveedorService.obtenerProveedores());
-        return "proveedores";
-    }
-    @GetMapping("/crear")
-    public String MostrarFormularioRegistrar(Model model) {
-        Proveedor proveedor = new Proveedor();
-        model.addAttribute("proveedor", proveedor);
-        return "crear-proveedor";
+        return "proveedores/proveedores"; // Nombre de la vista para listar proveedores
     }
 
+    /**
+     * Muestra el formulario para registrar un nuevo proveedor.
+     *
+     * @param model El modelo para pasar datos a la vista.
+     * @return El nombre de la vista que muestra el formulario de creación de proveedor.
+     */
+    @GetMapping("/crear")
+    public String mostrarFormularioRegistrar(Model model) {
+        Proveedor proveedor = new Proveedor();
+        model.addAttribute("proveedor", proveedor);
+        return "proveedores/crear-proveedor"; // Nombre de la vista para crear un proveedor
+    }
+
+    /**
+     * Crea un nuevo proveedor y redirige a la lista de proveedores.
+     *
+     * @param proveedor El objeto proveedor que se va a crear.
+     * @param model    El modelo para pasar datos a la vista en caso de error.
+     * @return La redirección a la lista de proveedores o el formulario de creación con un mensaje de error.
+     */
     @PostMapping
-    public String crearproveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model) {
+    public String crearProveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model) {
         try {
             proveedorService.crearProveedor(proveedor);
             return "redirect:/admin/proveedores";
@@ -40,32 +55,48 @@ public class ProveedorController {
             // Capturar el error y pasarlo al modelo
             model.addAttribute("errorMessage", "Error al guardar el proveedor: " + e.getMessage());
             model.addAttribute("showErrorModal", true); // Esta bandera indica que el modal debe mostrarse
-            return "crear-proveedor";
+            return "proveedores/crear-proveedor"; // Nombre de la vista para crear un proveedor
         }
     }
+
+    /**
+     * Muestra el formulario para editar un proveedor existente.
+     *
+     * @param id    El ID del proveedor a editar.
+     * @param model El modelo para pasar datos a la vista.
+     * @return El nombre de la vista que muestra el formulario de edición de proveedor.
+     */
     @GetMapping("/editar/{id}")
-    public String MostrarFormularioEditar (@PathVariable Long id, Model model) {
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
         model.addAttribute("proveedor", proveedorService.obtenerPorId(id));
-        return "editar-proveedor";
+        return "proveedores/editar-proveedor"; // Nombre de la vista para editar un proveedor
     }
 
+    /**
+     * Actualiza un proveedor existente y redirige a la lista de proveedores.
+     *
+     * @param id       El ID del proveedor a actualizar.
+     * @param proveedor El objeto proveedor con la información actualizada.
+     * @param model    El modelo para pasar datos a la vista en caso de error.
+     * @return La redirección a la lista de proveedores.
+     */
     @PostMapping("/{id}")
-    public String Actualizarproveedor(@PathVariable Long id, @ModelAttribute("proveedor") Proveedor proveedor, Model model) {
+    public String actualizarProveedor(@PathVariable Long id, @ModelAttribute("proveedor") Proveedor proveedor, Model model) {
         proveedorService.actualizarProveedorPorId(proveedor, id);
         return "redirect:/admin/proveedores";
     }
 
-
     /**
-     * Elimina un proveedor por su ID.
+     * Elimina un proveedor por su ID y redirige a la lista de proveedores.
      *
      * @param id El ID del proveedor a eliminar.
-     * @return Mensaje de éxito.
+     * @return La redirección a la lista de proveedores.
      */
     @GetMapping("/eliminar/{id}")
-    public String eliminarproveedor(@PathVariable Long id) {
+    public String eliminarProveedor(@PathVariable Long id) {
         proveedorService.eliminarProveedor(id);
         return "redirect:/admin/proveedores";
     }
 }
+
 
