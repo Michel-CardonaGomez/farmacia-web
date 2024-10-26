@@ -8,6 +8,9 @@
     height: fit-content;
     display: flex;
 }
+.container-fluid {
+    margin-left: 0 !important;
+}
 
 .row{
     padding: 10px;

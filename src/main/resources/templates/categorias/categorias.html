@@ -58,8 +58,8 @@
                     <td data-label="Creación" th:text="${categoria.creacion}"></td>
                     <td data-label="Actualización" th:text="${categoria.actualizacion}"></td>
                     <td data-label="Acciones">
-                        <a th:href="@{/categoria/editar/{id}(id=${categoria.id})}" class="boton">Editar</a>
-                        <a th:href="@{/categoria/eliminar/{id}(id=${categoria.id})}" class="boton"
+                        <a th:href="@{/categorias/editar/{id}(id=${categoria.id})}" class="boton">Editar</a>
+                        <a th:href="@{/categorias/eliminar/{id}(id=${categoria.id})}" class="boton"
                            onclick="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">Eliminar</a>
                     </td>
                 </tr>

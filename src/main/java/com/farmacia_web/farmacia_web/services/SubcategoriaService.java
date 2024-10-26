@@ -86,16 +86,12 @@ public class SubcategoriaService {
             Subcategoria subcategoria = subcategoriaRepository.findById(id).orElseThrow(() ->
                     new NoSuchElementException("Subcategoría con ID " + id + " no encontrada")
             );
-
-            // Actualiza los campos necesarios
+            Categoria categoria = new Categoria();
+            subcategoria.setId(request.getId());
             subcategoria.setNombre(request.getNombre());
-
-            // Establece la categoría asociada si está presente
-            if (request.getCategoria() != null && request.getCategoria().getId() != null) {
-                Categoria categoria = categoriaRepository.findById(request.getCategoria().getId())
-                        .orElseThrow(() -> new NoSuchElementException("Categoría con ID " + request.getCategoria().getId() + " no encontrada"));
-                subcategoria.setCategoria(categoria);
-            }
+            categoria.setId(request.getCategoria().getId());
+            subcategoria.setCategoria(categoria);
+            subcategoriaRepository.save(subcategoria);
 
             return subcategoriaRepository.save(subcategoria);
         } catch (NoSuchElementException e) {

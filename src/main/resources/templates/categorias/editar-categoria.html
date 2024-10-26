@@ -24,8 +24,8 @@
 
 <div class="contenido-principal">
   <h1>Farmacia Vida natural</h1>
-  <div class="container-fluid formulario">
-    <form id="form-categoria" th:object="${categoria}" th:action="@{/categorias}" method="post" class="container-fluid">
+  <div class="formulario">
+    <form id="form-categoria" th:object="${categoria}" th:action="@{/categorias/{id}(id=${categoria.id})}" method="post" class="container-fluid">
       <h5>Edición de Categoria</h5>
       <div class="mb-3">
         <label class="form-label" for="nombreMarca">Nombre de la Categoria:</label>

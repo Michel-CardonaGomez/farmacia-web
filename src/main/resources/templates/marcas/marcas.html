@@ -58,8 +58,8 @@
                     <td data-label="Creación" th:text="${marca.creacion}"></td>
                     <td data-label="Actualización" th:text="${marca.actualizacion}"></td>
                     <td data-label="Acciones">
-                        <a th:href="@{/templates/marcas/editar/{id}(id=${marca.id})}" class="boton">Editar</a>
-                        <a th:href="@{/templates/marcas/eliminar/{id}(id=${marca.id})}" class="boton"
+                        <a th:href="@{/marcas/editar/{id}(id=${marca.id})}" class="boton">Editar</a>
+                        <a th:href="@{/marcas/eliminar/{id}(id=${marca.id})}" class="boton"
                            onclick="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">Eliminar</a>
                     </td>
                 </tr>
