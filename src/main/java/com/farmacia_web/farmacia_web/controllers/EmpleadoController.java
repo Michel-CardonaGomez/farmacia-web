@@ -16,56 +16,85 @@ public class EmpleadoController {
     private EmpleadoService empleadoService;
 
     /**
-     * Obtiene una lista de todos los empleados.
+     * Muestra una lista de todos los empleados junto con los formularios para crear o editar un empleado.
      *
-     * @return Lista de empleados.
+     * @param model El modelo que se utilizará para pasar datos a la vista.
+     * @return La vista que muestra la lista de empleados y formularios.
      */
     @GetMapping
     public String listarEmpleados(Model model) {
+        model.addAttribute("empleado", new Empleado());
         model.addAttribute("empleados", empleadoService.obtenerEmpleados());
-        return "empleados/empleados";
-    }
-    @GetMapping("/crear")
-    public String MostrarFormularioRegistrar(Model model) {
-        Empleado empleado = new Empleado();
-        model.addAttribute("empleado", empleado);
-        return "empleados/crear-empleado";
+        return "entidades/empleados"; // Nombre de la vista para listar empleados y formularios
     }
 
+    /**
+     * Crea un nuevo empleado y lo guarda en la base de datos.
+     *
+     * @param empleado El nuevo empleado a crear.
+     * @param model El modelo para manejar mensajes de éxito o error.
+     * @return Redirección a la lista de empleados después de crearla.
+     */
     @PostMapping
     public String crearEmpleado(@ModelAttribute("empleado") Empleado empleado, Model model) {
         try {
             empleadoService.crearEmpleado(empleado);
-            return "redirect:/admin/empleados";
-        } catch (RuntimeException e) {
-            // Capturar el error y pasarlo al modelo
+            model.addAttribute("successMessage", "Empleado creado con éxito.");
+        } catch (Exception e) {
             model.addAttribute("errorMessage", "Error al guardar el empleado: " + e.getMessage());
-            model.addAttribute("showErrorModal", true); // Esta bandera indica que el modal debe mostrarse
-            return "empleados/crear-empleado";
         }
-    }
-    @GetMapping("/editar/{id}")
-    public String MostrarFormularioEditar (@PathVariable Long id, Model model) {
-        model.addAttribute("empleado", empleadoService.obtenerPorId(id));
-        return "empleados/editar-empleado";
-    }
-
-    @PostMapping("/{id}")
-    public String ActualizarEmpleado(@PathVariable Long id, @ModelAttribute("empleado") Empleado empleado, Model model) {
-        empleadoService.actualizarEmpleadoPorId(empleado, id);
+        model.addAttribute("empleados", empleadoService.obtenerEmpleados());
         return "redirect:/admin/empleados";
     }
 
+    /**
+     * Muestra el formulario para editar un empleado existente.
+     *
+     * @param id    El ID del empleado a editar.
+     * @param model El modelo que contiene el empleado a editar y la lista de empleados.
+     * @return La vista que muestra la lista de empleados y el formulario de edición.
+     */
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+        Empleado empleado = empleadoService.obtenerPorId(id);
+        if (empleado != null) {
+            model.addAttribute("empleado", empleado);
+        } else {
+            model.addAttribute("errorMessage", "Empleado no encontrado.");
+        }
+        model.addAttribute("empleados", empleadoService.obtenerEmpleados());
+        return "entidades/empleados"; // Nombre de la vista para listar empleados y formularios
+    }
 
     /**
-     * Elimina un empleado por su ID.
+     * Actualiza un empleado existente en la base de datos con los nuevos datos proporcionados.
+     *
+     * @param id      El ID del empleado a actualizar.
+     * @param empleado El empleado con los datos actualizados.
+     * @param model   El modelo para manejar mensajes de éxito o error.
+     * @return Redirección a la lista de empleados después de actualizarla.
+     */
+    @PostMapping("/{id}")
+    public String actualizarEmpleado(@PathVariable Long id, @ModelAttribute("empleado") Empleado empleado, Model model) {
+        try {
+            empleadoService.actualizarEmpleadoPorId(empleado, id);
+            model.addAttribute("successMessage", "Empleado actualizado con éxito.");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error al actualizar el empleado: " + e.getMessage());
+        }
+        model.addAttribute("empleados", empleadoService.obtenerEmpleados());
+        return "redirect:/admin/empleados";
+    }
+
+    /**
+     * Elimina un empleado específico de la base de datos.
      *
      * @param id El ID del empleado a eliminar.
-     * @return Mensaje de éxito.
+     * @return Redirección a la lista de empleados después de eliminarlo.
      */
     @GetMapping("/eliminar/{id}")
     public String eliminarEmpleado(@PathVariable Long id) {
         empleadoService.eliminarEmpleado(id);
-        return "redirect:/admin/empleados";
+        return "redirect:/admin/empleados"; // Redirige a la lista de empleados
     }
 }

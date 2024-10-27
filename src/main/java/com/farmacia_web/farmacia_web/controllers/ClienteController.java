@@ -15,82 +15,81 @@ public class ClienteController {
     private ClienteService clienteService;
 
     /**
-     * Muestra la lista de clientes.
+     * Muestra una lista de todos los clientes junto con los formularios para crear o editar un cliente.
      *
-     * @param model El modelo para pasar datos a la vista.
-     * @return El nombre de la vista que muestra la lista de clientes.
+     * @param model El modelo que se utilizará para pasar datos a la vista.
+     * @return La vista que muestra la lista de clientes y formularios.
      */
     @GetMapping
     public String listarClientes(Model model) {
+        model.addAttribute("cliente", new Cliente());
         model.addAttribute("clientes", clienteService.obtenerClientes());
-        return "clientes/clientes"; // Nombre de la vista para listar clientes
+        return "entidades/clientes"; // Nombre de la vista para listar clientes y formularios
     }
 
     /**
-     * Muestra el formulario para registrar un nuevo cliente.
+     * Crea un nuevo cliente y lo guarda en la base de datos.
      *
-     * @param model El modelo para pasar datos a la vista.
-     * @return El nombre de la vista que muestra el formulario de creación de cliente.
-     */
-    @GetMapping("/crear")
-    public String mostrarFormularioRegistrar(Model model) {
-        Cliente cliente = new Cliente();
-        model.addAttribute("cliente", cliente);
-        return "clientes/crear-cliente"; // Nombre de la vista para crear un cliente
-    }
-
-    /**
-     * Crea un nuevo cliente y redirige a la lista de clientes.
-     *
-     * @param cliente El objeto cliente que se va a crear.
-     * @param model   El modelo para pasar datos a la vista en caso de error.
-     * @return La redirección a la lista de clientes o el formulario de creación con un mensaje de error.
+     * @param cliente El nuevo cliente a crear.
+     * @param model El modelo para manejar mensajes de éxito o error.
+     * @return Redirección a la lista de clientes después de crearlo.
      */
     @PostMapping
     public String crearCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
         try {
             clienteService.crearCliente(cliente);
-            return "redirect:/clientes";
-        } catch (RuntimeException e) {
-            // Capturar el error y pasarlo al modelo
+            model.addAttribute("successMessage", "Cliente creado con éxito.");
+        } catch (Exception e) {
             model.addAttribute("errorMessage", "Error al guardar el cliente: " + e.getMessage());
-            model.addAttribute("showErrorModal", true); // Esta bandera indica que el modal debe mostrarse
-            return "clientes/crear-cliente"; // Nombre de la vista para crear un cliente
         }
+        model.addAttribute("clientes", clienteService.obtenerClientes());
+        return "redirect:/clientes";
     }
 
     /**
      * Muestra el formulario para editar un cliente existente.
      *
      * @param id    El ID del cliente a editar.
-     * @param model El modelo para pasar datos a la vista.
-     * @return El nombre de la vista que muestra el formulario de edición de cliente.
+     * @param model El modelo que contiene el cliente a editar y la lista de clientes.
+     * @return La vista que muestra la lista de clientes y el formulario de edición.
      */
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        model.addAttribute("cliente", clienteService.obtenerPorId(id));
-        return "clientes/editar-cliente"; // Nombre de la vista para editar un cliente
+        Cliente cliente = clienteService.obtenerPorId(id);
+        if (cliente != null) {
+            model.addAttribute("cliente", cliente);
+        } else {
+            model.addAttribute("errorMessage", "Cliente no encontrado.");
+        }
+        model.addAttribute("clientes", clienteService.obtenerClientes());
+        return "entidades/clientes";
     }
 
     /**
-     * Actualiza un cliente existente y redirige a la lista de clientes.
+     * Actualiza un cliente existente en la base de datos con los nuevos datos proporcionados.
      *
      * @param id      El ID del cliente a actualizar.
-     * @param cliente El objeto cliente con la información actualizada.
-     * @param model   El modelo para pasar datos a la vista en caso de error.
-     * @return La redirección a la lista de clientes.
+     * @param cliente El cliente con los datos actualizados.
+     * @param model   El modelo para manejar mensajes de éxito o error.
+     * @return Redirección a la lista de clientes después de actualizarlo.
      */
     @PostMapping("/{id}")
     public String actualizarCliente(@PathVariable Long id, @ModelAttribute("cliente") Cliente cliente, Model model) {
-        clienteService.actualizarClientePorId(cliente, id);
+        try {
+            clienteService.actualizarClientePorId(cliente, id);
+            model.addAttribute("successMessage", "Cliente actualizado con éxito.");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error al actualizar el cliente: " + e.getMessage());
+        }
+        model.addAttribute("clientes", clienteService.obtenerClientes());
         return "redirect:/clientes";
     }
 
     /**
-     * Elimina un cliente existente y redirige a la lista de clientes.
+     * Elimina un cliente específico de la base de datos.
      *
      * @param id El ID del cliente a eliminar.
-     * @return La redirección a la lista de clientes.
+     * @return Redirección a la lista de clientes después de eliminarlo.
      */
     @GetMapping("/eliminar/{id}")
     public String eliminarCliente(@PathVariable Long id) {
@@ -98,3 +97,4 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 }
+

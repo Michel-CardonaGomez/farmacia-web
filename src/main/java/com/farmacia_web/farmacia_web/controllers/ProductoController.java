@@ -17,13 +17,13 @@ public class ProductoController {
     @GetMapping
     public String listarProductos(Model model) {
         model.addAttribute("productos", productoService.obtenerProductos());
-        return "productos/productos";
+        return "entidades/productos";
     }
 
     @GetMapping("/crear")
     public String MostrarFormularioRegistar(Model model) {
         model.addAttribute("producto", new Producto());
-        return "productos/crear-producto";
+        return "entidades/crear-producto";
     }
 
     @PostMapping
@@ -35,6 +35,6 @@ public class ProductoController {
     @GetMapping("/editar/{id}")
     public String MostrarFormularioEditar(@PathVariable Long id, Model model) {
         productoService.obtenerProductoPorId(id);
-        return "productos/editar-producto";
+        return "entidades/editar-producto";
     }
 }

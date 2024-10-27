@@ -5,6 +5,7 @@
     background: white;
 }
 
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -37,6 +38,23 @@ tbody td {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+}
+.boton.close-boton{
+    background: transparent;
+    font-size: 20px;
+}
+.boton.close-boton:hover{
+    background: transparent;
+}
+.boton.editar-boton{
+    background: transparent;
+}
+.boton.editar-boton:hover{
+    background: transparent;
+}
+
+form.boton{
+    background: transparent;
 }
 
 a{

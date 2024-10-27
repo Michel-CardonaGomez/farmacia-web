@@ -83,6 +83,7 @@ public class MarcaService {
             Marca marca = marcaRepository.findById(id).orElseThrow(() ->
                     new NoSuchElementException("Marca con ID " + id + " no encontrada")
             );
+            marca.setId(request.getId());
             marca.setNombre(request.getNombre());
             // Actualiza otros campos si es necesario
             return marcaRepository.save(marca);

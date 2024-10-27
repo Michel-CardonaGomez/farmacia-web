@@ -30,3 +30,17 @@ function filterTable() {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const items = document.querySelectorAll("#sidebar .side-item");
+
+    items.forEach(item => {
+        item.addEventListener("click", function() {
+            // Remover la clase 'item-activo' de todos los elementos
+            items.forEach(i => i.classList.remove("active"));
+            // Agregar la clase 'item-activo' al elemento seleccionado
+            item.classList.add("active");
+        });
+    });
+});
+
+

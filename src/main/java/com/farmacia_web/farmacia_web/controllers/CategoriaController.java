@@ -15,81 +15,81 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     /**
-     * Obtiene una lista de todas las categorías.
+     * Muestra una lista de todas las categorías junto con los formularios para crear o editar una categoría.
      *
-     * @param model El modelo para pasar los datos a la vista.
-     * @return La vista con la lista de categorías.
+     * @param model El modelo que se utilizará para pasar datos a la vista.
+     * @return La vista que muestra la lista de categorías y formularios.
      */
     @GetMapping
     public String listarCategorias(Model model) {
+        model.addAttribute("categoria", new Categoria());
         model.addAttribute("categorias", categoriaService.obtenerCategorias());
-        return "categorias/categorias"; // Nombre de la vista que muestra la lista de categorías
+        return "entidades/categorias"; // Nombre de la vista para listar categorías y formularios
     }
 
     /**
-     * Muestra el formulario para crear una nueva categoría.
+     * Crea una nueva categoría y la guarda en la base de datos.
      *
-     * @param model El modelo para pasar los datos a la vista.
-     * @return La vista con el formulario de creación de categoría.
-     */
-    @GetMapping("/crear")
-    public String mostrarFormularioRegistrar(Model model) {
-        Categoria categoria = new Categoria();
-        model.addAttribute("categoria", categoria);
-        return "categorias/crear-categoria"; // Nombre de la vista del formulario de creación
-    }
-
-    /**
-     * Crea una nueva categoría en la base de datos.
-     *
-     * @param categoria La categoría a crear.
-     * @param model El modelo para manejar errores y pasar los datos a la vista.
-     * @return Redirección a la lista de categorías o a la vista de creación en caso de error.
+     * @param categoria La nueva categoría a crear.
+     * @param model El modelo para manejar mensajes de éxito o error.
+     * @return Redirección a la lista de categorías después de crearla.
      */
     @PostMapping
     public String crearCategoria(@ModelAttribute("categoria") Categoria categoria, Model model) {
         try {
             categoriaService.crearCategoria(categoria);
-            return "redirect:/categorias";
-        } catch (RuntimeException e) {
+            model.addAttribute("successMessage", "Categoría creada con éxito.");
+        } catch (Exception e) {
             model.addAttribute("errorMessage", "Error al guardar la categoría: " + e.getMessage());
-            model.addAttribute("showErrorModal", true); // Bandera para mostrar el modal de error
-            return "categorias/crear-categoria"; // Regresar al formulario en caso de error
         }
+        model.addAttribute("categorias", categoriaService.obtenerCategorias());
+        return "redirect:/categorias";
     }
 
     /**
      * Muestra el formulario para editar una categoría existente.
      *
      * @param id    El ID de la categoría a editar.
-     * @param model El modelo para pasar los datos de la categoría a la vista.
-     * @return La vista con el formulario de edición de categoría.
+     * @param model El modelo que contiene la categoría a editar y la lista de categorías.
+     * @return La vista que muestra la lista de categorías y el formulario de edición.
      */
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        model.addAttribute("categoria", categoriaService.obtenerPorId(id));
-        return "categorias/editar-categoria"; // Nombre de la vista del formulario de edición
+        Categoria categoria = categoriaService.obtenerPorId(id);
+        if (categoria != null) {
+            model.addAttribute("categoria", categoria);
+        } else {
+            model.addAttribute("errorMessage", "Categoría no encontrada.");
+        }
+        model.addAttribute("categorias", categoriaService.obtenerCategorias());
+        return "entidades/categorias";
     }
 
     /**
-     * Actualiza una categoría existente en la base de datos.
+     * Actualiza una categoría existente en la base de datos con los nuevos datos proporcionados.
      *
-     * @param id    El ID de la categoría a actualizar.
-     * @param categoria La categoría con los nuevos datos.
-     * @param model El modelo para manejar errores y pasar los datos a la vista.
-     * @return Redirección a la lista de categorías.
+     * @param id       El ID de la categoría a actualizar.
+     * @param categoria La categoría con los datos actualizados.
+     * @param model    El modelo para manejar mensajes de éxito o error.
+     * @return Redirección a la lista de categorías después de actualizarla.
      */
     @PostMapping("/{id}")
     public String actualizarCategoria(@PathVariable Long id, @ModelAttribute("categoria") Categoria categoria, Model model) {
-        categoriaService.actualizarCategoriaPorId(categoria, id);
+        try {
+            categoriaService.actualizarCategoriaPorId(categoria, id);
+            model.addAttribute("successMessage", "Categoría actualizada con éxito.");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error al actualizar la categoría: " + e.getMessage());
+        }
+        model.addAttribute("categorias", categoriaService.obtenerCategorias());
         return "redirect:/categorias";
     }
 
     /**
-     * Elimina una categoría por su ID.
+     * Elimina una categoría específica de la base de datos.
      *
      * @param id El ID de la categoría a eliminar.
-     * @return Redirección a la lista de categorías.
+     * @return Redirección a la lista de categorías después de eliminarla.
      */
     @GetMapping("/eliminar/{id}")
     public String eliminarCategoria(@PathVariable Long id) {
@@ -97,4 +97,3 @@ public class CategoriaController {
         return "redirect:/categorias";
     }
 }
-

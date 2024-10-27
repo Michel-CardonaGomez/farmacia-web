@@ -3,10 +3,23 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
     margin: 20px; /* Margen alrededor del contenedor */
     background: #81C784;
-    min-width:800px;
     padding: 20px;
     height: fit-content;
     display: flex;
+}
+.form-container {
+    position: relative; /* Necesario para que el botón de cerrar se posicione relativo a este contenedor */
+}
+
+.close-boton {
+    position: absolute; /* Posiciona el botón de cierre de manera absoluta */
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    right: 10px; /* Ajusta la distancia desde el lado derecho */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin bordes */
+    font-size: 20px; /* Tamaño del icono */
+    color: #000; /* Cambia el color según tu diseño */
 }
 
 .row{
@@ -42,7 +55,6 @@
 /* Estilos para pantallas de celulares (menores a 576px) */
 @media (max-width: 576px) {
     .formulario {
-        min-width: 300px; /* Ajusta la altura mínima a 300px */
         padding: 10px; /* Reduce el espaciado interno */
     }
     /* Ajusta el tamaño de los textos si es necesario */
@@ -54,7 +66,6 @@
 /* Estilos para tablets pequeñas (576px a 768px) */
 @media (min-width: 576px) and (max-width: 768px) {
     .formulario {
-        min-width: 400px; /* Ajusta la altura mínima a 400px */
         padding: 15px; /* Mantiene un espaciado interno cómodo */
     }
     .form-label {
@@ -65,7 +76,6 @@
 /* Estilos para tablets medianas (768px a 992px) */
 @media (min-width: 768px) and (max-width: 992px) {
     .formulario {
-        min-width: 500px; /* Ajusta la altura mínima a 500px */
         padding: 20px; /* Espaciado interno regular */
     }
     .form-label {
