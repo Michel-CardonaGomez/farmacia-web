@@ -30,7 +30,7 @@ function filterTable() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+
     const items = document.querySelectorAll("#sidebar .side-item");
 
     items.forEach(item => {
@@ -41,6 +41,5 @@ document.addEventListener("DOMContentLoaded", function() {
             item.classList.add("active");
         });
     });
-});
 
 

@@ -84,6 +84,7 @@ public class ClienteService {
             Cliente cliente = clienteRepository.findById(id).orElseThrow(() ->
                     new NoSuchElementException("Cliente con ID " + id + " no encontrado")
             );
+            cliente.setId(request.getId());
             cliente.setIdentificacion(request.getIdentificacion());
             cliente.setNombre(request.getNombre());
             cliente.setEmail(request.getEmail());

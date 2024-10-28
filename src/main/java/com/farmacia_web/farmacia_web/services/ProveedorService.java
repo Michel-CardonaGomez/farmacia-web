@@ -83,6 +83,7 @@ public class ProveedorService {
             Proveedor proveedor = proveedorRepository.findById(id).orElseThrow(() ->
                     new NoSuchElementException("Proveedor con ID " + id + " no encontrado")
             );
+            proveedor.setId(request.getId());
             proveedor.setNombre(request.getNombre());
             proveedor.setEmail(request.getEmail());
             proveedor.setTelefono(request.getTelefono());

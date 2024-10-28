@@ -84,6 +84,7 @@ public class CategoriaService {
             Categoria categoria = categoriaRepository.findById(id).orElseThrow(() ->
                     new NoSuchElementException("Categoria con ID " + id + " no encontrada")
             );
+            categoria.setId(request.getId());
             categoria.setNombre(request.getNombre());
             return categoriaRepository.save(categoria);
         } catch (NoSuchElementException e) {

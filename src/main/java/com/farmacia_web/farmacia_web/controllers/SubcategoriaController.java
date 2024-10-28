@@ -1,6 +1,7 @@
 package com.farmacia_web.farmacia_web.controllers;
 
 import com.farmacia_web.farmacia_web.models.Subcategoria;
+import com.farmacia_web.farmacia_web.services.CategoriaService;
 import com.farmacia_web.farmacia_web.services.SubcategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ public class SubcategoriaController {
 
     @Autowired
     private SubcategoriaService subcategoriaService;
+    @Autowired
+    private CategoriaService categoriaService;
 
     /**
      * Muestra una lista de todas las subcategorías junto con los formularios para crear o editar una subcategoría.
@@ -22,6 +25,7 @@ public class SubcategoriaController {
      */
     @GetMapping
     public String listarSubcategorias(Model model) {
+        model.addAttribute("categorias", categoriaService.obtenerCategorias());
         model.addAttribute("subcategoria", new Subcategoria());
         model.addAttribute("subcategorias", subcategoriaService.obtenerSubcategorias());
         return "entidades/subcategorias"; // Nombre de la vista para listar subcategorías y formularios
@@ -61,6 +65,7 @@ public class SubcategoriaController {
         } else {
             model.addAttribute("errorMessage", "Subcategoría no encontrada.");
         }
+        model.addAttribute("categorias", categoriaService.obtenerCategorias());
         model.addAttribute("subcategorias", subcategoriaService.obtenerSubcategorias());
         return "entidades/subcategorias"; // Nombre de la vista para listar subcategorías y formularios
     }

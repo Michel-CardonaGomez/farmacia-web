@@ -57,6 +57,18 @@ form.boton{
     background: transparent;
 }
 
+td[data-label="Acciones"] {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Bordes */
+}
+
+
+td[data-label="Acciones"] .boton{
+    margin: 5px;
+}
+
 a{
     text-decoration: none !important;
 }
