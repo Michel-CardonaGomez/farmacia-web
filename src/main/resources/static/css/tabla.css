@@ -58,7 +58,6 @@ form.boton{
 }
 
 td[data-label="Acciones"] {
-    display: flex;
     justify-content: space-between;
     padding: 10px; /* Espaciado interno */
     border: 1px solid #ddd; /* Bordes */

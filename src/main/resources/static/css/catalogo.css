@@ -1,3 +1,253 @@
-.catalogo-productos{
+.catalogo-productos {
+    grid-column: 1;
+    display: grid;
+    background:#81C784; /* Degradado suave */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    max-width: 100%;
+}
+.contenido-principal{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: space-between;
+}
+.container-factura{
+    position: sticky;
+    top: 0; /* Mantiene la factura fija en la parte superior al hacer scroll */
+    max-width: 100%;
+    grid-column: 2;
+}
 
+.container-producto {
+    background-color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+    max-width: 23% !important;
+    border: 1px solid #e0e0e0; /* Borde de los productos */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    display: inline-table;
+    justify-content: space-around; /* Espaciado entre el contenido */
+    align-items: center;
+    margin: 5px; /* Centrar verticalmente */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+
+}
+.container-producto:hover {
+    transform: translateY(-5px); /* Levantar el producto al pasar el cursor */
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3); /* Sombra más grande al hover */
+}
+
+.producto-info {
+    align-items: center;
+    align-content: space-around;
+    display: grid;
+    flex-direction: column;
+    grid-template-rows: 120px 30px 30px;
+}
+
+.producto-nombre {
+    align-content: center;
+    color: #333;
+    grid-row: 1;
+    height: 90%;
+    font-weight: bold; /* Nombre en negrita */
+    font-size: 15px; /* Tamaño del nombre */
+}
+
+.producto-precio {
+    min-width: 100%;
+    grid-row: 2;
+    text-align: right; /* Alinear a la derecha */
+    font-size: 1.1em; /* Tamaño del precio */
+    color:  #555; /* Color del precio */
+    font-weight: bold;
+}
+
+.cantidad-label {
+    display: none; /* Ocultar la etiqueta de cantidad */
+}
+
+.cantidad-input {
+    width: 70px; /* Aumentar ancho */
+    height: 30px; /* Ajustar altura */
+    font-size: 14px;
+    border: 1px solid #81C784; /* Borde verde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Relleno interno *//* Tamaño de la fuente */
+}
+
+.agregar-producto {
+    grid-row: 3;
+    justify-content: space-between;
+    display: flex; /* Usar flex para el botón */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.agregar-btn {
+    transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 50%; /* Botón redondo */
+    width: 30px; /* Ancho del botón */
+    height: 30px; /* Alto del botón */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+    font-size: 1.5em; /* Tamaño del icono */
+    display: flex; /* Flex para centrar el icono */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+}
+
+.agregar-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05); /* Aumentar al hover *//* Color al pasar el cursor */
+}
+
+/* Estilo del contenedor principal */
+.container-factura {
+    background-color: transparent; /* Un verde más suave */
+    padding-left: 20px;
+    padding-top: 0%;
+    border-radius: 8px;
+    color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del contenedor de información del cliente */
+.info-cliente {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #81C784;
+    border-radius: 8px;
+}
+
+/* Estilo de los labels */
+.info-cliente label {
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Estilo de los inputs */
+.info-cliente input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo del botón */
+.info-cliente button {
+    width: 20%;
+    height: 100%;
+}
+
+
+.row{
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Estilo general de la tabla */
+.table {
+    max-width: 100%;
+    background-color: #f4f9f4; /* Fondo verde claro para la tabla */
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del encabezado */
+.table thead {
+    background-color: #2b8a3e; /* Verde oscuro para el encabezado */
+    color: white;
+    font-weight: bold;
+}
+
+.table thead th {
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 2px solid #c8e6c9;
+}
+
+/* Estilo de las filas de la tabla */
+.table tbody tr {
+    border-bottom: 1px solid #c8e6c9;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #e8f5e9; /* Fondo verde muy claro para filas alternadas */
+}
+
+.table tbody td {
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    color: #4e6b50;
+}
+
+/* Estilo para los valores de precio y cantidad */
+.table tbody td:nth-child(4),
+.table tbody td:nth-child(5),
+.table tbody td:nth-child(6) {
+    font-weight: bold;
+    color: #2b8a3e; /* Verde oscuro */
+}
+
+/* Hover para filas */
+.table tbody tr:hover {
+    background-color: #dcedc8; /* Verde claro en hover */
+    cursor: pointer;
+}
+
+/* Bordes y radios de esquinas */
+.table-bordered {
+    border: 1px solid #c8e6c9;
+}
+
+/* Estilo para la sección de totales */
+.table tfoot {
+    background-color: #e8f5e9; /* Fondo verde claro */
+}
+
+.table tfoot td {
+    padding: 12px;
+    font-weight: bold;
+    color: #2b8a3e;
+    border-top: 2px solid #c8e6c9;
+}
+
+.table tfoot select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #c8e6c9;
+    color: #4e6b50;
+}
+
+/* Estilo del botón de Generar Factura */
+.table tfoot .btn-success {
+    background-color: #2b8a3e;
+    border: none;
+    padding: 8px 16px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.table tfoot .btn-success:hover {
+    background-color: #1e5c2d;
+}
+
+/* Estilo para los botones con íconos */
+button i {
+    margin-right: 5px;
 }

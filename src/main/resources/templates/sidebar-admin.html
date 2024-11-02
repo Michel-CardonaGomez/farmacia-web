@@ -10,20 +10,72 @@
     </div>
 
     <ul id="side_items">
-      <li class="side-item">
-        <a href="#">
+
+      <!-- Dashboard -->
+      <li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="side-item">
+        <a th:href="@{/dashboard}">
           <i class="fa-solid fa-tachometer-alt"></i>
           <span class="item-description"> Dashboard </span>
         </a>
       </li>
 
+      <!-- Productos con submenú -->
       <li class="side-item">
-        <a th:href="@{/admin/empleados}">
-          <i class="fa-solid fa-users"></i>
-          <span class="item-description"> Empleados </span>
+        <a href="#productosSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          <i class="fa-solid fa-box-open"></i> <!-- Cambiado a un ícono que representa una caja abierta -->
+          <span class="item-description"> Gestion Productos </span>
         </a>
+        <ul class="collapse list-unstyled" id="productosSubmenu">
+          <li>
+            <a th:href="@{/productos}">
+              <i class="fa-solid fa-box"></i>
+              <span class="item-description"> Productos </span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/marcas}">
+              <i class="fa-solid fa-tags"></i> <!-- Icono de etiquetas para marcas -->
+              <span class="item-description"> Marcas </span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/categorias}">
+              <i class="fa-solid fa-layer-group"></i>
+              <span class="item-description"> Categorías </span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/subcategorias}">
+              <i class="fa-solid fa-stream"></i>
+              <span class="item-description"> Subcategorías </span>
+            </a>
+          </li>
+        </ul>
       </li>
 
+      <!-- Facturas con submenú -->
+      <li class="side-item">
+        <a href="#reportesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          <i class="fa-solid fa-file-invoice"></i> <!-- Icono para facturas -->
+          <span class="item-description"> Facturas </span>
+        </a>
+        <ul class="collapse list-unstyled" id="reportesSubmenu">
+          <li>
+            <a th:href="@{/facturas/nueva-venta}"> <!-- Puedes modificar las rutas según corresponda -->
+              <i class="fa-solid fa-cart-plus"></i>
+              <span class="item-description"> Nueva Venta </span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/facturas/nueva-compra}">
+              <i class="fa-solid fa-shopping-cart"></i> <!-- Icono para compras -->
+              <span class="item-description"> Nueva Compra </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Clientes -->
       <li class="side-item">
         <a th:href="@{/clientes}">
           <i class="fa-solid fa-address-book"></i>
@@ -31,63 +83,45 @@
         </a>
       </li>
 
+      <!-- Empleados -->
+      <li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="side-item">
+        <a th:href="@{/admin/empleados}">
+          <i class="fa-solid fa-users"></i>
+          <span class="item-description"> Empleados </span>
+        </a>
+      </li>
+
+      <!-- Proveedores -->
       <li class="side-item">
-        <a th:href="@{/admin/proveedores}">
+        <a th:href="@{/proveedores}">
           <i class="fa-solid fa-handshake"></i>
           <span class="item-description"> Proveedores </span>
         </a>
       </li>
 
-      <li class="side-item">
+      <!-- Reportes -->
+      <li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="side-item">
         <a href="#">
-          <i class="fa-solid fa-box"></i>
-          <span class="item-description"> Productos </span>
-        </a>
-      </li>
-
-      <li class="side-item">
-        <a href="#">
-          <i class="fa-solid fa-file-alt"></i>
+          <i class="fa-solid fa-chart-line"></i> <!-- Icono de gráfico para reportes -->
           <span class="item-description"> Reportes </span>
         </a>
       </li>
-
-      <li class="side-item">
-        <a href="#">
-          <i class="fa-solid fa-shopping-cart"></i>
-          <span class="item-description"> Ventas </span>
-        </a>
-      </li>
-
-      <li class="side-item">
-        <a href="#">
-          <i class="fa-solid fa-shopping-basket"></i>
-          <span class="item-description"> Compras </span>
-        </a>
-      </li>
-
-      <li class="side-item">
-        <a href="#">
-          <i class="fa-solid fa-bell"></i>
-          <span class="item-description"> Notificaciones </span>
-        </a>
-      </li>
-
-
-      <div id="logout">
-        <form th:action="@{/logout}" th:method="post">
-          <div id="logout">
-            <button type="submit" id="logout_btn" class="btn btn-primary btn-block">
-              <i class="fa-solid fa-right-from-bracket"></i>
-              <span class="item-description"> Logout </span>
-            </button>
-          </div>
-        </form>
-      </div>
     </ul>
 
     <button id="open_btn">
       <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
     </button>
   </div>
+
+    <!-- Logout -->
+      <div id="logout">
+        <form th:action="@{/logout}" th:method="post">
+          <div>
+            <button type="submit" id="logout_btn">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span class="item-description"> Logout </span>
+            </button>
+          </div>
+        </form>
+      </div>
 </nav>

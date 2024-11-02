@@ -2,6 +2,34 @@ document.getElementById('open_btn').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('open-sidebar');
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Selecciona todos los enlaces que tienen un submenú
+    const dropdowns = document.querySelectorAll('.dropdown-toggle');
+
+    dropdowns.forEach(dropdown => {
+        dropdown.addEventListener('click', function(event) {
+            event.preventDefault(); // Evita que el enlace siga su comportamiento por defecto
+
+            // Encuentra el submenú relacionado
+            const submenu = this.nextElementSibling;
+
+            // Alterna la clase 'collapse' para mostrar/ocultar el submenú
+            submenu.classList.toggle('collapse');
+
+            // Cierra otros submenús abiertos
+            dropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== this) {
+                    const otherSubmenu = otherDropdown.nextElementSibling;
+                    if (otherSubmenu.classList.contains('collapse') === false) {
+                        otherSubmenu.classList.add('collapse');
+                    }
+                }
+            });
+        });
+    });
+});
+
+
 // Función para filtrar la tabla
 function filterTable() {
     // Obtener el valor del input de búsqueda

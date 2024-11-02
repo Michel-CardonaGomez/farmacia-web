@@ -15,6 +15,10 @@ public class EmpleadoDetails implements UserDetails {
         this.empleado = empleado;
     }
 
+    public String getName() {
+        return empleado.getNombre();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String role = "ROLE_" + empleado.getRol().toUpperCase();
