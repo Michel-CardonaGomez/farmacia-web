@@ -115,7 +115,7 @@
 }
 
 /* Estilo del contenedor de información del cliente */
-.info-cliente {
+.info-entidad {
     margin-top: 10px;
     padding: 15px;
     background-color: #81C784;
@@ -123,7 +123,7 @@
 }
 
 /* Estilo de los labels */
-.info-cliente label {
+.info-entidad label {
     color: black;
     font-weight: bold;
     margin-top: 10px;
@@ -131,7 +131,7 @@
 }
 
 /* Estilo de los inputs */
-.info-cliente input[type="text"] {
+.info-entidad input[type="text"] {
     width: 80%;
     padding: 8px;
     margin-top: 5px;
@@ -140,7 +140,7 @@
 }
 
 /* Estilo del botón */
-.info-cliente button {
+.info-entidad button {
     width: 20%;
     height: 100%;
 }
@@ -197,7 +197,8 @@
 /* Estilo para los valores de precio y cantidad */
 .table tbody td:nth-child(4),
 .table tbody td:nth-child(5),
-.table tbody td:nth-child(6) {
+.table tbody td:nth-child(6),
+.table tbody td:nth-child(7){
     font-weight: bold;
     color: #2b8a3e; /* Verde oscuro */
 }

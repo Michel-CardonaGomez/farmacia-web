@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Proveedores</title>
+    <title>Productos</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Font Awesome -->
@@ -93,13 +93,9 @@
                     </div>
 
                     <div class="row">
-                        <!-- Campo Stock -->
-                        <div class="col-md-2 mb-3">
-                            <label class="form-label" for="stock">Stock:</label>
-                            <input type="number" id="stock" th:field="*{existencias}" class="form-control" placeholder="Ingrese el stock" required />
-                        </div>
+
                         <!-- Campo Iva -->
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label" for="iva"> %IVA:</label>
                             <select id="iva" name="iva" class="form-control" required>
                                 <option value="" disabled selected>Seleccione el % de IVA</option>
@@ -211,14 +207,8 @@
                     </div>
 
                     <div class="row">
-                        <!-- Campo Stock -->
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label" for="stock">Stock:</label>
-                            <input type="number" id="stock" th:field="*{existencias}" class="form-control" placeholder="Ingrese el stock" required />
-                        </div>
-
                         <!-- Campo Iva -->
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label" for="iva"> %IVA:</label>
                             <select id="iva" name="iva" class="form-control" required>
                                 <option value="" disabled selected>Seleccione el % de IVA</option>
@@ -229,7 +219,7 @@
                         </div>
 
                         <!-- Campo Subcategoría -->
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label" for="subcategoria">Subcategoría:</label>
                             <select id="subcategoria" th:field="*{subcategoria.id}" class="form-control" required>
                                 <option value="" disabled>Seleccione una subcategoría</option>
@@ -238,7 +228,7 @@
                         </div>
 
                         <!-- Campo Proveedor -->
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label" for="proveedor">Proveedor:</label>
                             <select id="proveedor" th:field="*{proveedor.id}" class="form-control" required>
                                 <option value="" disabled>Seleccione un proveedor</option>
@@ -264,8 +254,6 @@
                     </div>
                 </form>
             </div>
-
-
 
             <div class="table-responsive">
             <table id="data-table">
@@ -298,7 +286,7 @@
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')" data-label="Precio venta" th:text="'$' + ${#numbers.formatDecimal(producto.precioVenta, 2, 'DEFAULT', 0, 'DEFAULT')}"></td>
                     <td data-label="Stock" th:text="${producto.existencias}"></td>
                     <td data-label="Subcategoria" th:text="${producto.subcategoria.nombre}"></td>
-                    <td data-label="Proveedor" th:text="${producto.proveedor.nombre}"></td>
+                    <td data-label="Proveedor" th:text="${producto.proveedor != null ? producto.proveedor.nombre : 'Sin definir'}"></td>
                     <td data-label="Estado" th:text="${producto.estado}"></td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')" data-label="Creación" th:text="${producto.creacion}"></td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')" data-label="Actualización" th:text="${producto.actualizacion}"></td>

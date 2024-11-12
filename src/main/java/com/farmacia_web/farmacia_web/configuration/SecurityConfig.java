@@ -41,9 +41,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/registro", "/login", "/facturas").permitAll() // Permitir acceso a las páginas de registro y login
-                .requestMatchers("/css/**", "/js/**", "/imagenes/**").permitAll() // Permitir acceso a los recursos estáticos
-                .requestMatchers("/admin").hasAnyRole("ADMINISTRADOR")
+                .requestMatchers("/registro", "/login").permitAll() // Permitir acceso a las páginas de registro y login
+                .requestMatchers("/css/**", "/js/**", "/imagenes/**", "/archivos/**", "/static/archivos**").permitAll() // Permitir acceso a los recursos estáticos
+                .requestMatchers("/admin/**").hasAnyRole("ADMINISTRADOR")
                 .requestMatchers("/**").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .anyRequest().authenticated()
                 .and()

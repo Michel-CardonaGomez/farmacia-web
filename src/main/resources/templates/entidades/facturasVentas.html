@@ -23,13 +23,15 @@
     <div class="contenido-principal col-md-12">
         <h1>Farmacia Vida natural</h1>
         <div class="catalogo-productos">
-                <!-- Crear un rango manualmente -->
-                <div th:each="fila : ${#numbers.sequence(0, filas - 1)}" class="row">
+            <input type="text" id="search-input"  placeholder="Buscar...">
+            <!-- Crear un rango manualmente -->
+                <div th:each="fila : ${#numbers.sequence(0, filas - 1)}" class="row productos-container">
                         <div th:each="producto, iterStat : ${productos}"
                              th:if="${iterStat.index >= fila * 4 && iterStat.index < (fila + 1) * 4}" class="col-md-3 producto mb-4 container-producto">
                             <div class="producto-info">
                                 <table class="data-table">
                                     <tr> <p class="producto-nombre"
+                                            th:data-id="${producto.id}"
                                             th:data-nombre="${producto.nombre} + ' ' + ${producto.marca.nombre} + ' ' + ${producto.presentacion}"
                                             th:data-codigo="${producto.codigo}"
                                             th:data-iva="${producto.iva}"
@@ -41,7 +43,7 @@
                                     <tr>
                                     <div class="agregar-producto">
                                         <label class="cantidad-label" for="cantidad">Cantidad:</label>
-                                        <input id="cantidad" class="cantidad-input" type="number" required>
+                                        <input id="cantidad" class="cantidad-input" type="number" min="1" value="1" required>
                                         <button class="agregar-btn" onclick="agregarProducto(this)">+</button>
                                     </div>
                                     </tr>
@@ -52,20 +54,23 @@
         </div>
 
         <div class="container-factura col-md-12">
-            <p th:text="${empleado}"></p>
-            <div class="info-cliente">
-                <form action="@{buscar cliente por identificacion}"></form>
-                <label for="identificacion-cliente">identificacion:</label>
+            <p th:if="${message}" th:text="${message}" style="color: #0a0a0a"></p>
+            <div class="info-entidad">
+                <form th:action="@{/facturas/ventas}" th:method="get">
+                <label for="identificacion">identificacion:</label>
                 <div class="row">
-                    <input id="identificacion-cliente" type="text" placeholder="Ingrese la identificacion del cliente">
+                    <input th:value="${cliente.identificacion}" id="identificacion" type="text" name="identificacion" placeholder="Ingrese la identificacion del cliente">
                     <button type="submit" class="boton">Buscar</button>
                 </div>
                 <label for="nombre-cliente">Nombre:</label>
-                <input id="nombre-cliente" type="text" readonly placeholder="Nombre del cliente buscado">
+                <input id="nombre-cliente" type="text" th:value="${cliente.nombre}" readonly placeholder="Nombre del cliente buscado">
+                </form>
             </div>
 
             <div class="tabla-factura">
-                <table id="tablaFactura" class="table table-bordered text-end">
+                <form th:action="@{/facturas/nueva-venta}" th:method="post">
+                    <input type="hidden" name="cliente" th:value="${cliente.id}">
+                    <table id="tablaFactura" class="table table-bordered text-end">
                     <thead>
                     <tr>
                         <th>Código</th>
@@ -83,11 +88,12 @@
                     <tr>
                         <td colspan="4" class="text-end fw-bold">Total:</td>
                         <td id="totalFactura" colspan="2"></td>
+                        <input type="hidden" id="inputTotal" name="total">
                     </tr>
                     <tr>
                         <td colspan="4" class="text-end fw-bold">Método de Pago:</td>
                         <td colspan="2">
-                            <select>
+                            <select name="metodoPago" id="metodoPago">
                                 <option value="efectivo">Efectivo</option>
                                 <option value="tarjeta">Tarjeta de Crédito/Débito</option>
                                 <option value="transferencia">Transferencia Bancaria</option>
@@ -96,17 +102,19 @@
                     </tr>
                     <tr>
                         <td colspan="6" class="text-center">
-                            <button class="btn btn-success mt-2"> <i class="fas fa-file-invoice"></i>Generar Factura</button>
+                            <button type="submit" class="btn btn-success mt-2" onclick="return confirm('¿Estás seguro de realizar esta nueva venta?');"> <i class="fas fa-file-invoice"></i>Generar Factura</button>
                         </td>
                     </tr>
                     </tfoot>
                 </table>
+                </form>
             </div>
         </div>
     </div>
-    <script th:src="@{/js/Factura.js}"></script>
+
     <script src="../../static/js/modal.js" th:src="@{/js/modal.js}"></script>
     <script src="../static/js/sidebar.js" th:src="@{/js/sidebar.js}"></script>
+    <script th:src="@{/js/FacturaVenta.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

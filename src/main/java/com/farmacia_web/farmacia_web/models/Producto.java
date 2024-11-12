@@ -40,7 +40,7 @@ public class Producto {
     private Subcategoria subcategoria;
 
     @ManyToOne(fetch = FetchType.LAZY)  // Relación con Proveedor
-    @JoinColumn(name = "id_proveedor", nullable = false)
+    @JoinColumn(name = "id_proveedor", nullable = true)
     private Proveedor proveedor;
 
     @ManyToOne(fetch = FetchType.LAZY)  // Relación con Marca

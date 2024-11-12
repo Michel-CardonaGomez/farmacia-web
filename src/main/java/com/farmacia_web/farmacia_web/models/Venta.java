@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,7 +36,10 @@ public class Venta {
     @Column(name = "fecha_creacion", updatable = false)
     private Timestamp creacion;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallesVenta> detallesVenta;
+    @Column(name = "metodo_pago", nullable = false)
+    private String metodoPago;
+
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<DetallesVenta> detallesVenta = new ArrayList<>();
 
 }

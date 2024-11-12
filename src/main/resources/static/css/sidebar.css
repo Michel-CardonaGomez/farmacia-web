@@ -10,7 +10,7 @@
 body {
     display: flex;
     min-height: 100vh;
-    background-color: #e3f7e9; /* Fondo verde suave */
+    background-color: #e3f7e9 !important;/* Fondo verde suave */
     overflow-x: auto;
 }
 
@@ -21,11 +21,11 @@ body {
 
 }
 .contenido-principal{
+    width: 100%;
     padding: 20px;
     position:relative;
     z-index: 1;
     padding-left: calc(82px + 35px);
-    overflow-x: auto;
 
 }
 
@@ -79,6 +79,7 @@ body {
 }
 
 .side-item {
+    position: relative;
     border-radius: 8px;
     padding: 14px;
     cursor: pointer;
@@ -112,7 +113,30 @@ body {
     width: 20px;
     height: 20px;
 }
+/* Estilos para la tarjeta que muestra el nombre */
+.tooltip {
+    display: none; /* Ocultar la tarjeta por defecto */
+    position: absolute;
+    left: 70px; /* Espacio para que no se superponga con el ícono */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #4caf50;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
 
+/* Mostrar la tarjeta cuando se pasa el ratón sobre el ítem */
+.side-item:hover .tooltip {
+    display: block; /* Mostrar la tarjeta */
+    opacity: 1; /* Desvanecer el texto para hacerlo visible */
+}
 #logout {
     border-top: 1px solid #d5ead1;
     padding: 12px;
@@ -175,7 +199,9 @@ body {
     justify-content: flex-start;
     gap: 14px;
 }
-
+#sidebar.open-sidebar .tooltip {
+    display: none;
+}
 .contenido {
 
     overflow-x: auto; /* Habilita scroll en el contenido */

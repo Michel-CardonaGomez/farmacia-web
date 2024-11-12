@@ -13,7 +13,7 @@
 
       <!-- Dashboard -->
       <li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="side-item">
-        <a th:href="@{/dashboard}">
+        <a th:href="@{/dashboard}" class="sidebar-link">
           <i class="fa-solid fa-tachometer-alt"></i>
           <span class="item-description"> Dashboard </span>
         </a>
@@ -61,13 +61,13 @@
         </a>
         <ul class="collapse list-unstyled" id="reportesSubmenu">
           <li>
-            <a th:href="@{/facturas/nueva-venta}"> <!-- Puedes modificar las rutas según corresponda -->
+            <a th:href="@{/facturas/ventas}" class="sidebar-link"> <!-- Puedes modificar las rutas según corresponda -->
               <i class="fa-solid fa-cart-plus"></i>
               <span class="item-description"> Nueva Venta </span>
             </a>
           </li>
           <li>
-            <a th:href="@{/facturas/nueva-compra}">
+            <a th:href="@{/facturas/compras}">
               <i class="fa-solid fa-shopping-cart"></i> <!-- Icono para compras -->
               <span class="item-description"> Nueva Compra </span>
             </a>
@@ -101,7 +101,7 @@
 
       <!-- Reportes -->
       <li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="side-item">
-        <a href="#">
+        <a th:href="@{/admin/reportes}">
           <i class="fa-solid fa-chart-line"></i> <!-- Icono de gráfico para reportes -->
           <span class="item-description"> Reportes </span>
         </a>

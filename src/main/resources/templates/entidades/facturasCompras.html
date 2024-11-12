@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Facturas</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/css/css/all.min.css" th:href="@{/css/css/all.min.css}"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    />
+    <link rel="stylesheet" href="../../static/css/catalogo.css" th:href="@{/css/catalogo.css}" />
+    <link rel="stylesheet" href="../../static/css/sidebar.css" th:href="@{/css/sidebar.css}" />
+    <link rel="stylesheet" href="../../static/css/tabla.css" th:href="@{/css/tabla.css}" />
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+
+
+    <div>
+        <div th:replace="~{sidebar-admin :: sidebar}"></div>
+    </div>
+
+    <div class="contenido-principal col-md-12">
+        <h1>Farmacia Vida natural</h1>
+        <div class="catalogo-productos">
+            <input type="text" id="search-input"  placeholder="Buscar...">
+            <!-- Crear un rango manualmente -->
+                <div th:if="${proveedor.id} != null" th:each="fila : ${#numbers.sequence(0, filas - 1)}" class="row productos-container">
+                        <div th:each="producto, iterStat : ${productos}"
+                             th:if="${iterStat.index >= fila * 4 && iterStat.index < (fila + 1) * 4}" class="col-md-3 producto mb-4 container-producto">
+                            <div class="producto-info">
+                                <table class="data-table">
+                                    <tr> <p class="producto-nombre"
+                                            th:data-id="${producto.id}"
+                                            th:data-nombre="${producto.nombre} + ' ' + ${producto.marca.nombre} + ' ' + ${producto.presentacion}"
+                                            th:data-codigo="${producto.codigo}"
+                                            th:data-iva="${producto.iva}"
+                                            th:data-precio="${producto.precioCompra}"
+                                            th:text="${producto.nombre} + ' ' + ${producto.marca.nombre} + ' ' + ${producto.presentacion}">
+                                        Nombre del producto
+                                    </p></tr>
+                                    <tr><p class="producto-precio" th:text="'$' + ${#numbers.formatDecimal(producto.precioVenta, 2, 'DEFAULT', 0, 'DEFAULT')}">Precio del producto</p></tr>
+                                    <tr>
+                                    <div class="agregar-producto">
+                                        <label class="cantidad-label" for="cantidad">Cantidad:</label>
+                                        <input id="cantidad" class="cantidad-input" type="number" min="1" value="1" required>
+                                        <button class="agregar-btn" onclick="agregarProducto(this)">+</button>
+                                    </div>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+        <div class="container-factura col-md-12">
+            <p th:text="${empleado}"></p>
+            <div class="info-entidad">
+                <form th:action="@{/facturas/compras}" th:method="get">
+                <label for="idProveedor">Id:</label>
+                <div class="row">
+                    <input th:value="${proveedor.id}" id="idProveedor" type="text" name="idProveedor" placeholder="Ingrese el id del proveedor">
+                    <button type="submit" class="boton">Buscar</button>
+                </div>
+                <label for="nombre-proveedor">Nombre:</label>
+                <input id="nombre-proveedor" type="text" th:value="${proveedor.nombre}" readonly placeholder="Nombre del proveedor buscado">
+                </form>
+            </div>
+
+            <div class="tabla-factura">
+                <form th:action="@{/facturas/nueva-compra}" th:method="post">
+                    <input type="hidden" name="idProveedor" th:value="${proveedor.id}">
+                    <table id="tablaFactura" class="table table-bordered text-end">
+                    <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>IVA</th>
+                        <th>Precio unitario de Compra</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody id="facturaBody">
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-end fw-bold">Total:</td>
+                        <td id="totalFactura" colspan="2"></td>
+                        <input type="hidden" id="inputTotal" name="total">
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-end fw-bold">Método de Pago:</td>
+                        <td colspan="2">
+                            <select name="metodoPago" id="metodoPago">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                                <option value="transferencia">Transferencia Bancaria</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <button type="submit" class="btn btn-success mt-2" onclick="return confirm('¿Estás seguro de realizar esta nueva venta?');"> <i class="fas fa-file-invoice"></i>Generar Factura</button>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../static/js/modal.js" th:src="@{/js/modal.js}"></script>
+    <script src="../static/js/sidebar.js" th:src="@{/js/sidebar.js}"></script>
+    <script th:src="@{/js/FacturaCompra.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

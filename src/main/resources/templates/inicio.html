@@ -6,6 +6,14 @@
 </head>
 <body>
     <h1>PAGINA DE INICIO</h1>
-    <p th:text="${errorMessage}"></p>
+
+        <div th:each="detalle : ${detallesVenta}">
+            <h5 th:text="${detalle.producto.nombre}"></h5>
+            <h5 th:text="${detalle.precioVenta}"></h5>
+            <h5 th:text="${detalle.cantidad}"></h5>
+            <h5 th:text="${detalle.subtotal}"></h5>
+        </div>
+
+        <h5 th:text="${message}"></h5>
 </body>
 </html>

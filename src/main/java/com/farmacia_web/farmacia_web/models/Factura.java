@@ -16,7 +16,7 @@ public class Factura {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private Long numero;
+    private String serial;
 
     @Column(length = 45, nullable = false)
     private String tipo;

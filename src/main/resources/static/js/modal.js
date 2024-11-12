@@ -29,3 +29,28 @@ document.addEventListener("DOMContentLoaded", function() {
     createFormContainer.style.display = "none";
     editFormContainer.style.display = "none";
 });
+
+const containerCompras = document.getElementById("container-compras");
+const btnMostrarVentas = document.getElementById("mostar-btn-ventas");
+const btnMostrarCompras = document.getElementById("mostar-btn-compras");
+const containerVentas = document.getElementById("container-ventas");
+
+function toggleDisplay(containerToShow, btnToUpdate, containerToHide, btnToReset) {
+    // Oculta el contenedor opuesto y actualiza su botón si está visible
+    if (containerToHide.style.display === "grid") {
+        containerToHide.style.display = "none";
+        btnToReset.innerHTML = "<i class='fas fa-plus'></i>"; // Resetea el ícono del botón del contenedor oculto
+    }
+    // Alterna el contenedor actual
+    containerToShow.style.display = containerToShow.style.display === "grid" ? "none" : "grid";
+    // Cambia el icono del botón basado en la visibilidad del contenedor
+    btnToUpdate.innerHTML = containerToShow.style.display === "grid" ? "<i class='fas fa-times'></i>" : "<i class='fas fa-plus'></i>";
+}
+
+function mostrarVentas() {
+    toggleDisplay(containerVentas, btnMostrarVentas, containerCompras, btnMostrarCompras);
+}
+
+function mostrarCompras() {
+    toggleDisplay(containerCompras, btnMostrarCompras, containerVentas, btnMostrarVentas);
+}

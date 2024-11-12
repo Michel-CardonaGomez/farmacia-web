@@ -51,7 +51,9 @@ public class ProductoService {
      */
     public Producto crearProducto(Producto producto) {
         try {
-            producto.setEstado("Disponible"); // Establece el estado inicial del producto como "Disponible".
+
+            producto.setExistencias(0);
+            producto.setEstado("Inactivo"); // Establece el estado inicial del producto como "Disponible".
             return productoRepository.save(producto);
         } catch (Exception e) {
             throw new RuntimeException("Error al crear el producto: " + e.getMessage());
@@ -119,6 +121,7 @@ public class ProductoService {
             throw new RuntimeException("Error al actualizar producto con ID " + id + ": " + e.getMessage());
         }
     }
+
 
 
     /**

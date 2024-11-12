@@ -1,0 +1,237 @@
+.dashboard-container {
+    min-width: 100%;
+    margin: 0px;
+    margin-top: 30px;
+}
+.dashboard-card {
+    justify-content: space-between;
+    display: flex;
+    border-radius: 10px;
+    color: white;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    min-height: 120px; /* Altura mínima para que las tarjetas no sean tan grandes */
+    max-width: 100%; /* Para que no se estiren mucho en pantallas más grandes */
+}
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+.icon {
+    font-size: 30px;
+}
+.card-title {
+    font-size: 15px; /* Tamaño de fuente para los títulos */
+}
+.card-text {
+    font-size: 1.5rem; /* Tamaño de fuente para los valores */
+}
+.iva { background-color: #2E8B57; }
+.total-clients { background-color: #2E8B57; } /* Verde Bosque Claro */
+.total-suppliers { background-color: #005B33; } /* Verde Medium Sea Green */
+.total-products { background-color: #2E8B57; } /* Verde Lima */
+.total-invoices { background-color: #4CAF50; } /* Verde Cadet */
+.stock { background-color:  #28a745;} /* Verde Pale */
+.revenue { background-color:  #005B33; } /* Verde Bosque */
+.benefit { background-color: #4CAF50; } /* Verde Oscuro */
+/* Por defecto ocultamos el contenedor de tablets */
+.tablet-row {
+    display: none;
+}
+
+canvas#graficoVentas3 {
+    width: 1200px;
+}
+
+.chart.productos-ventas {
+    grid-column: span 2;
+}
+.cotainer-tablet {
+    display: none;
+}
+.escritorio{
+    min-width: 100%;
+    margin: 0;
+ }
+.productos-ventas{
+    background: #2E8B57;
+    border-radius: 10px;
+}
+.proveedores-cantidad{
+    background: #28a745;
+    border-radius: 10px;
+}
+.empleados-ventas{
+    background: #005B33;
+    border-radius: 10px;
+
+}
+
+.metodos-pago{
+    border-radius: 10px;
+    background: #005B33;
+}
+.productos-categorias{
+    background: #4CAF50;
+    border-radius: 10px;
+
+}
+.chart-name{
+    color: white;
+    font-weight: bold;
+    margin: 20px;
+    text-align: center;
+}
+.chart{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    height: fit-content;
+    border-radius: 15px !important;
+}
+
+.chart:hover {
+    transform: translateY(-5px); /* Levanta ligeramente la gráfica */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}
+.charts{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    width: 100%;
+    padding-left: 20px;
+    padding-top: 0px;
+
+}
+.chart-container{
+    width: 100%;
+    height: 480px;
+
+}
+
+
+
+/* En pantallas entre 768px y 1024px (tablets), mostramos el contenedor con 4 tarjetas por fila */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .tablet-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .escritorio {
+        display: none;
+    }
+
+    .dashboard-card {
+        justify-content: space-between;
+        display: flex;
+        border-radius: 10px;
+        color: white;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        max-height: 120px; /* Altura mínima para que las tarjetas no sean tan grandes */
+        max-width: 100%; /* Para que no se estiren mucho en pantallas más grandes */
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .icon {
+        display: none;
+    }
+
+    .card-title {
+        font-size: 15px; /* Tamaño de fuente para los títulos */
+    }
+
+    .card-text {
+        font-size: 1.1rem; /* Tamaño de fuente para los valores */
+    }
+
+    .cotainer-tablet {
+        display: flex;
+    }
+
+    /* Cada tarjeta ocupa el 25% del ancho, es decir, 4 tarjetas por fila */
+    .tablet-row .col-md-3 {
+        flex: 0 0 25%;
+    }
+
+    .charts {
+        grid-template-columns: 1fr;
+    }
+}
+    /* Media Query para pantallas pequeñas (Móviles) */
+    @media (max-width: 767px) {
+        .dashboard-card{
+            min-height: 90px;
+        }
+        .icon{
+            display: none;
+        }
+        .card-title {
+            font-size: 13px; /* Tamaño de fuente para los títulos */
+        }
+
+        .card-text {
+            font-size: 14px; /* Tamaño de fuente para los valores */
+            font-weight: bold;
+        }
+
+        /* Cambiar el comportamiento de la sección de gráficos a columna */
+        .charts {
+            display: flex;
+            flex-direction: column; /* Apilar los elementos en una columna */
+            align-items: center; /* Centrar los gráficos */
+            width: 100%;
+            padding-left: 0;
+        }
+
+        .chart {
+            width: 100%; /* Hacer que cada gráfico ocupe todo el ancho disponible */
+            margin-bottom: 20px; /* Espaciado entre los gráficos */
+        }
+
+        .chart-name {
+            font-size: 16px; /* Reducir tamaño de fuente para títulos */
+        }
+
+        .metodos-pago, .productos-ventas, .proveedores-cantidad, .empleados-ventas, .productos-categorias {
+            background: #FFFFFF; /* Fondo blanco para cada gráfico */
+            border-radius: 10px;
+        }
+
+        canvas {
+            width: 100% !important; /* Asegurar que el canvas ocupe todo el ancho del contenedor */
+        }
+        .productos-ventas{
+            background: #2E8B57;
+            border-radius: 10px;
+        }
+        .proveedores-cantidad{
+            background: #28a745;
+            border-radius: 10px;
+        }
+        .empleados-ventas{
+            background: #005B33;
+            border-radius: 10px;
+
+        }
+        .metodos-pago>h5{
+            color: black;
+        }
+        .metodos-pago{
+            background: white;
+        }
+        .productos-categorias{
+            background: #4CAF50;
+            border-radius: 10px;
+
+        }
+
+        .contenido-principal{
+            padding-left: 15px !important;
+        }
+
+    }

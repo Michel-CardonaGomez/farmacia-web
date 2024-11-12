@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Farmacia</title>
+  <!-- Bootstrap 4 -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome para los iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../static/css/sidebar.css" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" href="../../static/css/css/all.min.css" th:href="@{/css/css/all.min.css}">
+    <link rel="stylesheet" href="../../static/css/dashboard.css" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="../../static/css/tabla.css" th:href="@{/css/tabla.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+<div>
+    <div th:replace="~{sidebar-admin :: sidebar}"></div>
+</div>
+<div class="contenido-principal">
+    <h1>Farmacia Vida natural</h1>
+    <div class="container dashboard-container">
+            <div class="container escritorio">
+                <div class="row">
+                    <!-- Total Clientes -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card total-clients">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Total Clientes</h5>
+                            <p class="card-text" th:text="${totalClientes}"></p>
+                            </div>
+                            <div><i class="fas fa-users"></i></div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Total Proveedores -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card total-suppliers">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Total Proveedores</h5>
+                            <p class="card-text" th:text="${totalProveedores}"></p>
+                            </div>
+                            <div><i class="fas fa-truck icon"></i></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Productos -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card total-products">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Total Productos</h5>
+                            <p class="card-text" th:text="${totalProductos}"></p>
+                            </div>
+                            <div><i class="fas fa-capsules icon"></i></div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Total Facturas -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card total-invoices">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Total Ventas</h5>
+                            <p class="card-text" th:text="${totalVentas}"></p>
+                            </div>
+                            <div><i class="fas fa-file-invoice icon"></i></div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Existencias Vendidas -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card stock">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Existencias Vendidas</h5>
+                                    <p class="card-text" th:text="${existenciasVendidas}"></p>
+                                </div>
+                                <div><i class="fas fa-shopping-cart icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Existencias Actuales -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card stock">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Existencias Actuales</h5>
+                                    <p class="card-text" th:text="${existenciasActuales}"></p>
+                                </div>
+                                <div><i class="fas fa-warehouse icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            
+                <div class="row">
+
+                    <!-- Existencias Totales -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card stock">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Existencias Totales</h5>
+                                    <p class="card-text" th:text="${existenciasTotales}"></p>
+                                </div>
+                                <div><i class="fas fa-boxes icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Importe Vendido -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card revenue">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Importe Vendido</h5>
+                            <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(importeVendido, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                            </div>
+                            <div><i class="fas fa-dollar-sign icon"></i></div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Importe Pagado -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card revenue">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Importe Pagadoo</h5>
+                            <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(importePagado, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                
+                    <!-- Beneficio Bruto -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card benefit">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Beneficio Bruto</h5>
+                            <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(beneficioBruto, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                            </div>
+                            <div><i class="fas fa-piggy-bank icon"></i></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Iva -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card iva">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Total IVA</h5>
+                                    <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(impuestos, 2, 'DEFAULT', 0, 'DEFAULT')}"></p> <!-- Este valor lo obtendrás dinámicamente desde el backend -->
+                                </div>
+                                <div><i class="fas fa-money-bill-wave icon"></i></div> <!-- Aquí puedes cambiar el ícono si lo deseas -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Beneficio Neto -->
+                    <div class="col-lg-2 col-md-3 col-6 mb-4">
+                        <div class="card dashboard-card benefit">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                            <h5 class="card-title">Beneficio Neto</h5>
+                            <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(beneficioNeto, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                            </div>
+                            <div><i class="fas fa-wallet icon"></i></div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+
+        <div class="container-tablet">
+            <div class="row tablet-row">
+                <!-- Total Clientes -->
+                <div class="col-12 col-md-3 col-lg-3 mb-4">
+                    <div class="card dashboard-card total-clients">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">Total Clientes</h5>
+                                <p class="card-text" th:text="${totalClientes}">45000</p>
+                            </div>
+                            <div><i class="fas fa-users icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Proveedores -->
+                <div class="col-12 col-md-3 col-lg-3 mb-4">
+                    <div class="card dashboard-card total-suppliers">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">Total Proveedores</h5>
+                                <p class="card-text" th:text="${totalProveedores}"></p>
+                            </div>
+                            <div><i class="fas fa-truck icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Productos -->
+                <div class="col-12 col-md-3 col-lg-3 mb-4">
+                    <div class="card dashboard-card total-products">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">Total Productos</h5>
+                                <p class="card-text" th:text="${totalProductos}"></p>
+                            </div>
+                            <div><i class="fas fa-capsules icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total ventas -->
+                <div class="col-12 col-md-3 col-lg-3 mb-4">
+                    <div class="card dashboard-card total-invoices">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">Total Ventas</h5>
+                                <p class="card-text" th:text="${totalVentas}"></p>
+                            </div>
+                            <div><i class="fas fa-file-invoice icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row tablet-row">
+                    <!-- Existencias Vendidas -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card stock">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Existencias Vendidas</h5>
+                                    <p class="card-text" th:text="${existenciasVendidas}"></p>
+                                </div>
+                                <div><i class="fas fa-shopping-cart icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Existencias Actuales -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card stock">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Existencias Actuales</h5>
+                                    <p class="card-text" th:text="${existenciasActuales}"></p>
+                                </div>
+                                <div><i class="fas fa-warehouse icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Existencias Totales -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card stock">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Existencias Totales</h5>
+                                    <p class="card-text" th:text="${existenciasTotales}"></p>
+                                </div>
+                                <div><i class="fas fa-boxes icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Importe Vendido -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card revenue">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Importe Vendido</h5>
+                                    <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(importeVendido, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                                </div>
+                                <div><i class="fas fa-dollar-sign icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row tablet-row">
+
+                    <!-- Importe Pagado -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card revenue">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Importe Pagadoo</h5>
+                                    <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(importePagado, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                                </div>
+                                <div><i class="fas fa-credit-card icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Beneficio Bruto -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card benefit">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Beneficio Bruto</h5>
+                                    <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(beneficioBruto, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                                </div>
+                                <div><i class="fas fa-piggy-bank icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Iva -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card iva">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Total IVA</h5>
+                                    <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(impuestos, 2, 'DEFAULT', 0, 'DEFAULT')}"></p> <!-- Este valor lo obtendrás dinámicamente desde el backend -->
+                                </div>
+                                <div><i class="fas fa-money-bill-wave icon"></i></div> <!-- Aquí puedes cambiar el ícono si lo deseas -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Beneficio Neto -->
+                    <div class="col-lg-2 col-md-3 col-12 mb-4">
+                        <div class="card dashboard-card benefit">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Beneficio Neto</h5>
+                                    <p class="card-text" th:text="'$' + ${#numbers.formatDecimal(beneficioNeto, 2, 'DEFAULT', 0, 'DEFAULT')}"></p>
+                                </div>
+                                <div><i class="fas fa-wallet icon"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts container-fluid">
+            <div class="chart metodos-pago">
+                <h5 class="chart-name">Cantidad de ventas por métodos de pago</h5>
+                <div class="chart-container">
+                    <canvas id="graficoVentas4"></canvas>
+                </div>
+            </div>
+            <div class="chart proveedores-cantidad">
+                <h5 class="chart-name">Top proveedores</h5>
+                <div class="chart-container">
+                    <canvas id="graficoVentas5"></canvas>
+                </div>
+            </div>
+            <div class="chart productos-categorias">
+                <h5 class="chart-name">Cantidad de productos vendidos por categoría</h5>
+                <div class="chart-container">
+                    <canvas id="graficoVentas"></canvas>
+                </div>
+            </div>
+
+            <div class="chart empleados-ventas">
+                <h5 class="chart-name">Top empleados con más ventas</h5>
+
+                <div class="chart-container">
+                    <canvas id="graficoVentas2"></canvas>
+                </div>
+            </div>
+
+            <div class="chart productos-ventas">
+                <h5 class="chart-name">Top productos más vendidos
+                </h5>
+
+                <div class="chart-container">
+                    <canvas id="graficoVentas3"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+  <!-- Bootstrap JS -->
+<script src="../../static/js/sidebar.js" th:src="@{/js/sidebar.js}"></script>
+<script src="../../static/js/dashboard.js" th:src="@{/js/dashboard.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Obtener los datos del modelo de Thymeleaf
+    const categorias = /*[[${categorias}]]*/ []; // Array de categorías
+    const cantidades = /*[[${cantidades}]]*/ []; // Array de cantidades
+    const empleados = /*[[${empleados}]]*/ []; // Array de empleados
+    const numeroVentas = /*[[${numeroVentas}]]*/ []; // Array de ventas
+    const productos = /*[[${productos}]]*/ []; // Array de ventas
+    const cantidadVentas = /*[[${cantidadVentas}]]*/ []; // Array de ventas
+    const metodosPago = /*[[${metodosPago}]]*/ []; // Array de metodos de pago
+    const cantidadPagos = /*[[${cantidadPagos}]]*/ []; // Array de ventas
+    const proveedores = /*[[${proveedores}]]*/ []; // Array de ventas
+    const numVentas = /*[[${numVentas}]]*/ []; // Array de ventas
+
+
+
+    /*]]>*/
+
+    console.log(proveedores);
+    console.log(numVentas);
+
+    window.onload = function() {
+        // Primer gráfico
+        const ctx1 = document.getElementById('graficoVentas').getContext('2d');
+        const grafico1 = crearGraficoVertical(ctx1, categorias, cantidades, "Productos vendidos por categoría");
+
+        // Segundo gráfico
+        const ctx2 = document.getElementById('graficoVentas2').getContext('2d');
+        const grafico2 = crearGraficoVertical(ctx2, empleados, numeroVentas, "Ventas realizadas por empleado");
+
+        // tercer gráfico
+        const ctx3 = document.getElementById('graficoVentas3').getContext('2d');
+        const grafico3 = crearGraficoHorizontal(ctx3, productos, cantidadVentas, "Cantidad del producto");
+
+        const ctx4 = document.getElementById('graficoVentas4').getContext('2d');
+        const grafico4 = crearGraficoTorta(ctx4, metodosPago, cantidadPagos);
+
+        const ctx5 = document.getElementById('graficoVentas5').getContext('2d');
+        const grafico5 = crearGraficoVertical(ctx5, proveedores, numVentas, "Cantidad de productos vendidos por proveedor");
+
+    }
+
+
+
+        function crearGraficoHorizontal(ctx, labels, data, leyenda) {
+            return new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico de barras
+                data: {
+                    labels: labels,  // Nombres de productos (eje Y)
+                    datasets: [{
+                        label: leyenda,
+                        data: data,  // Cantidades de ventas (eje X)
+                        backgroundColor: '#FFFFFF',  // Color de las barras
+                        borderColor: 'rgba(0, 0, 0, 0)',  // Líneas (borde de las barras) transparentes
+                        borderWidth: 0  // Ancho del borde de las barras
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',  // Cambia el eje de las barras a horizontal
+                    responsive: true,
+                    maintainAspectRatio: false, // Esto hace que la gráfica se ajuste sin mantener la relación de aspecto
+                    scales: {
+                        x: {  // Ahora el eje X tiene los valores de cantidad de ventas
+                            beginAtZero: true,
+                            grid: {
+                                color: '#000000',
+                                borderColor: '#D3D3D3',
+                                borderWidth: 1
+                            },
+                            ticks: {
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 15,
+                                    family: 'poppins'
+                                }
+                            }
+                        },
+                        y: {  // El eje Y ahora muestra los nombres de productos
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0)',
+                                borderColor: 'rgba(0, 0, 0, 0)',
+                                borderWidth: 0
+                            },
+                            ticks: {
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 15,
+                                    family: 'poppins'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function crearGraficoVertical(ctx, labels, data, leyenda) {
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,  // Pasar las categorías dinámicamente
+                datasets: [{
+                    label: leyenda,
+                    data: data,  // Pasar las cantidades dinámicamente
+                    backgroundColor: '#FFFFFF',  // Barras blancas
+                    borderColor: 'rgba(0, 0, 0, 0)',  // Líneas (borde de las barras) transparentes
+                    borderWidth: 0  // Ancho del borde de las barras
+                }]
+            },
+            options: {
+                responsive: true,  // Asegura que el gráfico sea responsivo
+                maintainAspectRatio: false, // Esto hace que la gráfica se ajuste sin mantener la relación de aspecto
+                scales: {
+                    y: {
+                        beginAtZero: true,  // Comienza el eje Y desde 0
+                        grid: {
+                            color: '#000000',  // Color gris para las líneas de la cuadrícula
+                            borderColor: '#D3D3D3',  // Color gris para el borde de la cuadrícula
+                            borderWidth: 1  // Grosor de la línea de borde de la cuadrícula
+                        },
+                        ticks: {
+                            color: '#FFFFFF',  // Color negro para los números de la escala del eje Y
+                            font: {
+                                size: 15,  // Tamaño de la fuente para los números
+                                family: 'poppins',  // Familia de la fuente para los números
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0)', // Color gris para las líneas de la cuadrícula en el eje X
+                            borderColor: 'rgba(0, 0, 0, 0)',  // Color gris para el borde de la cuadrícula
+                            borderWidth: 0  // Grosor de la línea de borde de la cuadrícula
+                        },
+                        ticks: {
+                            color: '#FFFFFF',  // Color negro para los números de la escala del eje X
+                            font: {
+                                size: 15,  // Tamaño de la fuente para los números
+                                family: 'poppins',  // Familia de la fuente para los números
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: function(context) {
+                            // Solo muestra etiquetas en dispositivos móviles
+                            return window.innerWidth <= 768;
+                        },
+                        anchor: 'end',  // Esto coloca la etiqueta al final de la barra
+                        align: 'top',   // Esto coloca el texto encima de la barra
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
+                        color: 'black' // Puedes cambiar el color del texto
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                display: false // Ocultar ticks en dispositivos móviles
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                display: true // Puedes controlar si mostrar las etiquetas del eje X
+                            }
+                        }
+                },
+
+                    legend: {
+                        display: false,  // Ocultar la leyenda por defecto
+                    },
+                    tooltip: {
+                        enabled: true,  // Habilitar el tooltip (cuadro emergente al pasar el mouse)
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.dataset.label + ': ' + tooltipItem.raw;  // Personalizar el texto del tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function crearGraficoTorta(ctx4, metodosPago, cantidadPagos) {
+        return new Chart(ctx4, {
+            type: 'pie',  // Tipo de gráfico de torta
+            data: {
+                labels: metodosPago,  // Etiquetas de los métodos de pago
+                datasets: [{
+                    label: 'Métodos de Pago',
+                    data: cantidadPagos,  // Cantidad de pagos para cada método
+                    backgroundColor: ['#66BB6A', '#81C784', '#A5D6A7'],  // Tonos de verde
+                    borderColor: '#FFFFFF',  // Color blanco para el borde de las secciones de la torta
+                    borderWidth: 1  // Ancho del borde de las secciones
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Esto hace que la gráfica se ajuste sin mantener la relación de aspecto
+                plugins: {
+                    legend: {
+                        position: 'top',  // Colocar la leyenda en la parte superior
+                        labels: {
+                            color: '#FFFFFF',  // Color de la leyenda
+                            font: {
+                                family: 'poppins',  // Familia de fuente
+                                size: 15  // Tamaño de la fuente
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,  // Habilitar el tooltip (cuadro emergente al pasar el mouse)
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;  // Personalizar el texto del tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
